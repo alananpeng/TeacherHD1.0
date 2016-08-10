@@ -41,4 +41,8 @@ public class Urls {
      * 获取个人全部教材课本及其章节
      */
     public static  final  String URL_GETAllCURSOR$CHAPTER=SERVER_ADDRESS+"api/v1/chapter/queryChapter";
+    /**
+     * 通过章节id 账号id 课本id获取该章节下所有备课信息
+     */
+    public static  final  String URL_GETPREPARECHATER=SERVER_ADDRESS+ "api/v1/chaptercontent/findByChapterId";
 }

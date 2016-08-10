@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +20,10 @@ import com.hanboard.teacherhd.android.adapter.TreeListViewAdapter;
 import com.hanboard.teacherhd.android.entity.Chapter;
 import com.hanboard.teacherhd.android.entity.Domine;
 import com.hanboard.teacherhd.android.entity.Elements;
+import com.hanboard.teacherhd.android.entity.PrepareChapter;
 import com.hanboard.teacherhd.android.entity.listentity.LessonsList;
 import com.hanboard.teacherhd.android.entity.listentity.ListChapter;
+import com.hanboard.teacherhd.android.entity.tree.Node;
 import com.hanboard.teacherhd.android.model.IPrepareLessonsModel;
 import com.hanboard.teacherhd.android.model.impl.PrepareLessonsModelImpl;
 import com.hanboard.teacherhd.common.base.BaseFragment;
@@ -43,7 +46,7 @@ import butterknife.OnClick;
 /**
  * Created by Administrator on 2016/8/6.
  */
-public class TestFragment extends BaseFragment implements TextWatcher,IDataCallback<Domine> {
+public class TestFragment extends BaseFragment implements TextWatcher,IDataCallback<Domine> ,TreeListViewAdapter.OnTreeNodeClickListener{
     private String textBookId;
     @BindView(R.id.fragment_prepare_lv_chapterList)
     ListView mLvChapterList;
@@ -60,7 +63,7 @@ public class TestFragment extends BaseFragment implements TextWatcher,IDataCallb
     private static int CLOSE_SEARCH = 1;
     private static int OPEN_SEARCH = 0;
 
-
+    private static final String TAG = "TestFragment";
     private int flag = 0;
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
@@ -80,8 +83,8 @@ public class TestFragment extends BaseFragment implements TextWatcher,IDataCallb
 
     @Override
     protected void initData() {
-        String bookId = getArguments().getString(DialogActivity.TEXTBOOK_ID);
-        iPrepareLessonsModel.getChapterList("2",bookId,"","",this);
+        textBookId = getArguments().getString(DialogActivity.TEXTBOOK_ID);
+        iPrepareLessonsModel.getChapterList("2",textBookId,"","",this);
         initSearchListView();
     }
     private void initSearchListView() {
@@ -133,9 +136,17 @@ public class TestFragment extends BaseFragment implements TextWatcher,IDataCallb
             try {
                 mAdapter = new TextBookAllChapterAdapter<Chapter>(mLvChapterList,context,((ListChapter) data).chapters, 0);
                 mLvChapterList.setAdapter(mAdapter);
+                mAdapter.setOnTreeNodeClickListener(this);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
+        }else  if (data instanceof  Elements){
+           // Log.e(TAG, "onSuccess: ======================"+((PrepareChapter)((Elements) data).elements).getPrepareContent().getContentObject() );
+           // List<PrepareChapter> b = ((Elements) data).elements;
+
+           EventBus.getDefault().post(((Elements) data).elements);
+          //  Log.e(TAG, "onSuccess: ======================"+b.get(1).content.getContentTitle());
+
         }
     }
 
@@ -147,5 +158,10 @@ public class TestFragment extends BaseFragment implements TextWatcher,IDataCallb
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onClick(Node node, int position) {
+        iPrepareLessonsModel.getChapterDetials((String)SharedPreferencesUtils.getParam(context,"id","null"),node.getCid(),textBookId,"1",this);
     }
 }

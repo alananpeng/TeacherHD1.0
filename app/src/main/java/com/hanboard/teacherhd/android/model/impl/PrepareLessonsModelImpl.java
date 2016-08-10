@@ -11,6 +11,7 @@ import com.hanboard.teacherhd.android.entity.Domine;
 import com.hanboard.teacherhd.android.entity.Elements;
 import com.hanboard.teacherhd.android.entity.JiaocaiVersion;
 import com.hanboard.teacherhd.android.entity.MData;
+import com.hanboard.teacherhd.android.entity.PrepareChapter;
 import com.hanboard.teacherhd.android.entity.Status;
 import com.hanboard.teacherhd.android.entity.listentity.ListChapter;
 import com.hanboard.teacherhd.android.model.IPrepareLessonsModel;
@@ -24,6 +25,7 @@ import com.hanboard.teacherhd.config.Urls;
 import com.hanboard.teacherhd.lib.common.exception.DataException;
 import com.hanboard.teacherhd.lib.common.http.okhttp.OkHttpUtils;
 import com.hanboard.teacherhd.lib.common.http.okhttp.callback.GenericsCallback;
+import com.hanboard.teacherhd.lib.common.http.okhttp.callback.StringCallback;
 import com.hanboard.teacherhd.lib.common.utils.DESCoder;
 import com.hanboard.teacherhd.lib.common.utils.JsonUtil;
 
@@ -67,6 +69,39 @@ public class PrepareLessonsModelImpl implements IPrepareLessonsModel {
                         if(res.code.equals(Constants.CODE_SUCCESS)){
                             chapterList.chapters = res.result;
                             iDataCallback.onSuccess(chapterList);
+                        }else{
+                            iDataCallback.onError(CodeInfo.REQUEST_FAILDE,Integer.valueOf(res.code));
+                        }
+                    }else {
+                        iDataCallback.onError(CodeInfo.REQUEST_EMPTY,0);
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void getChapterDetials(String accountId, String chapterId, String teachBookId, String pageNum, final IDataCallback<Domine> iDataCallback) {
+        try {
+            Map<String,String> param = new BaseMap().initMap();
+            param.put("accountId",new DESCoder(CoderConfig.CODER_CODE).encrypt(accountId));
+            param.put("chapterId",new DESCoder(CoderConfig.CODER_CODE).encrypt(chapterId));
+            param.put("teachBookId",new DESCoder(CoderConfig.CODER_CODE).encrypt(teachBookId));
+            param.put("pageNum",pageNum);
+            OkHttpUtils.get().params(param).url(Urls.URL_GETPREPARECHATER).build().execute(new StringCallback() {
+                @Override
+                public void onError(Call call, Exception e, int id) {
+                    iDataCallback.onError(e.getMessage(),id);
+                }
+
+                @Override
+                public void onResponse(String response, int id) {
+                    if(null!=response||!response.equals("")){
+                        MData<Elements<PrepareChapter>> res = JsonUtil.fromJson(response,new TypeToken<MData<Elements<PrepareChapter>>>(){}.getType());
+                        if(res.code.equals(Constants.CODE_SUCCESS)){
+                            iDataCallback.onSuccess(res.result);
                         }else{
                             iDataCallback.onError(CodeInfo.REQUEST_FAILDE,Integer.valueOf(res.code));
                         }

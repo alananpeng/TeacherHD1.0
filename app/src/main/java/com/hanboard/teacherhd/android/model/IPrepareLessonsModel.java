@@ -21,4 +21,5 @@ public interface IPrepareLessonsModel {
      * 获取课程版本列表
      */
     void getChapterList(String tid,String vid,String sid,String key,IDataCallback<Domine> iDataCallback);
+    void getChapterDetials(String accountId,String chapterId,String teachBookId,String pageNum,IDataCallback<Domine> iDataCallback);
 }
