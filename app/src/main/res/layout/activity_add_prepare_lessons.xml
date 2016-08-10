@@ -5,13 +5,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.hanboard.teacherhd.android.activity.AddPrepareLessonsActivity">
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/add_lessons_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-    </LinearLayout>
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView8"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:src="@mipmap/up_load_03"/>
+    </RelativeLayout>
     <LinearLayout
         android:padding="10dp"
         android:layout_width="match_parent"
