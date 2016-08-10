@@ -10,16 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView8"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:src="@mipmap/up_load_03"/>
     </RelativeLayout>
     <LinearLayout
         android:padding="10dp"
@@ -53,6 +43,16 @@
             android:gravity="center"
             android:textColor="@color/white"
             android:text="习题"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@mipmap/add_lessons_center_07"/>
+        <TextView
+            android:id="@+id/add_lessons_save"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="全部上传"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
