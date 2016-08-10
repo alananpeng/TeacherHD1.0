@@ -68,6 +68,7 @@ public class TestFragment extends BaseFragment implements TextWatcher,IDataCallb
     });
 
 
+
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
         EventBus.getDefault().register(this);
