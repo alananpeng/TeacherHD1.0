@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.hanboard.teacherhd.R;
+import com.hanboard.teacherhd.android.activity.DialogActivity;
 import com.hanboard.teacherhd.android.adapter.SearchListAdapter;
 import com.hanboard.teacherhd.android.adapter.TextBookAllChapterAdapter;
 import com.hanboard.teacherhd.android.adapter.TreeAdapter;
@@ -71,22 +72,16 @@ public class TestFragment extends BaseFragment implements TextWatcher,IDataCallb
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
-        EventBus.getDefault().register(this);
         iPrepareLessonsModel = new PrepareLessonsModelImpl();
         return inflater.inflate(R.layout.fragment_prepare_lessons, container, false);
     }
 
     @Override
     protected void initData() {
-        iPrepareLessonsModel.getChapterList("2","087ff757ca46407e9e01062d3233f8b4","","",this);
+        String bookId = getArguments().getString(DialogActivity.TEXTBOOK_ID);
+        iPrepareLessonsModel.getChapterList("2",bookId,"","",this);
         initSearchListView();
     }
-    @Subscribe(threadMode = ThreadMode.POSTING)
-    public void getData(String textBookId){
-      this.textBookId = textBookId;
-        ToastUtils.showShort(context,textBookId);
-    }
-
     private void initSearchListView() {
         List<String> content = new ArrayList<>();
         for (int j = 0; j < 10; j++) {
@@ -150,6 +145,5 @@ public class TestFragment extends BaseFragment implements TextWatcher,IDataCallb
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 }
