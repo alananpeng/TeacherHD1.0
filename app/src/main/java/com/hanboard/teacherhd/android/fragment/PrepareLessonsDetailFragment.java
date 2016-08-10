@@ -56,7 +56,7 @@ public class PrepareLessonsDetailFragment extends BaseFragment {
         list.add(c);
         list.add(c);
         list.add(c);
-        mGdPrepareLessons.setAdapter(new PrepareLessonsDetailGirdViewAdapter(context, R.layout.prepare_lessons_detail_item, list));
+        mGdPrepareLessons.setAdapter(new PrepareLessonsDetailGirdViewAdapter(context, R.layout.new_lessons_item, list));
         mGdPrepareLessons.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override

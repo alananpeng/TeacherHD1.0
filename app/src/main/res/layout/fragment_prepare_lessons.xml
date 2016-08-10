@@ -116,6 +116,7 @@
                      android:layout_width="0dp"
                      android:layout_height="match_parent">
                    <fragment
+                       android:layout_marginLeft="10dp"
                        android:name="com.hanboard.teacherhd.android.fragment.PrepareLessonsDetailFragment"
                        android:id="@+id/prepare_rightfrag"
                        android:layout_width="match_parent"

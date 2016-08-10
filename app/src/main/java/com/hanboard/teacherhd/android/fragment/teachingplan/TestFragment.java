@@ -76,7 +76,7 @@ public class TestFragment extends BaseFragment implements TextWatcher,IDataCallb
 
     @Override
     protected void initData() {
-        iPrepareLessonsModel.getChapterList("2","","","",this);
+        iPrepareLessonsModel.getChapterList("2","087ff757ca46407e9e01062d3233f8b4","","",this);
         initSearchListView();
     }
     @Subscribe(threadMode = ThreadMode.POSTING)

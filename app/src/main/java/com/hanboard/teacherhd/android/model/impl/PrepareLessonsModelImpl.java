@@ -48,7 +48,7 @@ public class PrepareLessonsModelImpl implements IPrepareLessonsModel {
         try {
             Map<String,String> param = new BaseMap().initMap();
             param.put("tid",tid);
-//            param.put("vid",new DESCoder(CoderConfig.CODER_CODE).encrypt(vid));
+            param.put("vid",new DESCoder(CoderConfig.CODER_CODE).encrypt(vid));
 //            param.put("sid",new DESCoder(CoderConfig.CODER_CODE).encrypt(sid));
 //            param.put("key",new DESCoder(CoderConfig.CODER_CODE).encrypt(key));
             OkHttpUtils.get().url(Urls.URL_GETAllCURSOR$CHAPTER).params(param).build().execute(new GenericsCallback<String>(new JsonGenericsSerializator())
