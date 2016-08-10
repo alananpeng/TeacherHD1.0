@@ -33,9 +33,8 @@ public class ContactsFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-//        EmptyLayout f = (EmptyLayout) getRootView().findViewById(R.id.emptyLayout);
-//        f.showEmpty();
+//      EmptyLayout f = (EmptyLayout) getRootView().findViewById(R.id.emptyLayout);
+//      f.showEmpty();
         new Titanic().start(myTextView);
     }
-
 }
