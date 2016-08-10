@@ -5,9 +5,10 @@
     android:versionName="0.0.1">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:name=".manager.AppContext"
         android:allowBackup="true"
@@ -27,23 +28,25 @@
         <activity android:name=".android.activity.MainActivity" />
         <activity android:name=".android.activity.ClassActivity" />
         <activity android:name=".android.activity.JiecaoPlayer" />
-        <activity android:name=".android.activity.SelectTextBookActivity" android:theme="@style/dialogActivity"></activity>
-        <activity android:name=".android.activity.DialogActivity"
-            android:theme="@style/dialogActivity">
-        </activity>
+        <activity
+            android:name=".android.activity.SelectTextBookActivity"
+            android:theme="@style/dialogActivity" />
+        <activity
+            android:name=".android.activity.DialogActivity"
+            android:theme="@style/dialogActivity"></activity>
+
         <receiver android:name=".android.broadCast.WPSReciver_">
             <intent-filter>
                 <action android:name="com.kingsoft.writer.back.key.down" />
                 <action android:name="cn.wps.moffice.file.close" />
                 <action android:name="com.kingsoft.writer.back.key.down" />
                 <action android:name="com.kingsoft.writer.home.key.down" />
-
             </intent-filter>
         </receiver>
-        <activity android:name=".android.activity.TestActivity">
-
-        </activity>
-
+        <activity android:name=".android.activity.TestActivity"></activity>
+        <activity
+            android:name=".android.activity.AddPrepareLessonsActivity"
+            android:theme="@style/dialogActivity"></activity>
     </application>
 
 </manifest>

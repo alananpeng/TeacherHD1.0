@@ -61,7 +61,7 @@
                 android:textSize="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="授课对象："/>
+                android:text="课型："/>
             <TextView
                 android:id="@+id/new_lessons_suitobject"
                 android:textColor="#38638e"

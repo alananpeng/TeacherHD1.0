@@ -1,14 +1,21 @@
 package com.hanboard.teacherhd.android.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.hanboard.teacherhd.R;
+import com.hanboard.teacherhd.android.activity.AddPrepareLessonsActivity;
 import com.hanboard.teacherhd.android.adapter.NewLessonsGridViewAdapter;
 import com.hanboard.teacherhd.android.entity.Account;
+import com.hanboard.teacherhd.android.entity.Content;
 import com.hanboard.teacherhd.android.entity.Domine;
 import com.hanboard.teacherhd.android.entity.Lessons;
 import com.hanboard.teacherhd.android.entity.listentity.LessonsList;
@@ -24,6 +31,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -41,6 +49,7 @@ class NewLessonsDetailFragment extends BaseFragment implements IDataCallback<Dom
     GridView mGdNewLessonsList;
     private ISelectTextBookModel iSelectTextBookModel;
     private String mSubjectName;
+    private List<Lessons> res = new ArrayList<>();
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
         EventBus.getDefault().register(this);
@@ -50,7 +59,15 @@ class NewLessonsDetailFragment extends BaseFragment implements IDataCallback<Dom
 
     @Override
     protected void initData() {
-
+        mGdNewLessonsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Lessons ls = (Lessons) parent.getAdapter().getItem(position);
+                if(ls.content.contentTitle.equals("添加课程")){
+                    startActivity(new Intent(context, AddPrepareLessonsActivity.class));
+                }
+            }
+        });
     }
     @Subscribe(threadMode = ThreadMode.POSTING)
     void getData(GetLessons getLessons){
@@ -67,7 +84,13 @@ class NewLessonsDetailFragment extends BaseFragment implements IDataCallback<Dom
     @Override
     public void onSuccess(Domine data) {
         if(data instanceof LessonsList){
-            List<Lessons> res = ((LessonsList) data).elements;
+            res = ((LessonsList) data).elements;
+            //添加课程
+            Lessons l = new Lessons();
+            Lessons.ContentBean c = new Lessons.ContentBean();
+            c.contentTitle="添加课程";
+            l.content = c;
+            res.add(l);
             mGdNewLessonsList.setAdapter(new NewLessonsGridViewAdapter(context,R.layout.new_lessons_item,res,mSubjectName));
         }
     }
