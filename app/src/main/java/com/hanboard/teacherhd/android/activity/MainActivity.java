@@ -1,5 +1,6 @@
 package com.hanboard.teacherhd.android.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +14,11 @@ import com.hanboard.teacherhd.android.fragment.ContactsFragment;
 import com.hanboard.teacherhd.android.fragment.CourseWareFragment;
 import com.hanboard.teacherhd.android.fragment.HomeFragment;
 import com.hanboard.teacherhd.common.base.BaseActivity;
+import com.hanboard.teacherhd.lib.common.utils.ToastUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindColor;
 import butterknife.BindView;
@@ -134,13 +140,11 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void handler(Message msg) {
-
     }
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+    protected void onDestroy() {
+        super.onDestroy();
+
     }
+
 }

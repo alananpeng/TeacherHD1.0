@@ -8,7 +8,9 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,9 +74,15 @@ public class HomeFragment extends BaseFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==100&&resultCode==200){
-            String textBookId = data.getStringExtra(DialogActivity.TEXTBOOK_ID);
-            EventBus.getDefault().post(textBookId);
-            switchToFragment(R.id.lnl_main_content,new TestFragment(),true);
+           // switchToFragment(R.id.lnl_main_content,new TestFragment(),true);
+            TestFragment testFragment = new TestFragment();
+            Bundle  bundle=new Bundle();
+            bundle.putString(DialogActivity.TEXTBOOK_ID,data.getStringExtra(DialogActivity.TEXTBOOK_ID));
+            testFragment.setArguments(bundle);
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.setCustomAnimations(R.anim.zoomin, R.anim.zoomout);
+            ft.replace(R.id.lnl_main_content, testFragment);
+            ft.commit();
         }
     }
     /*打开备课*/

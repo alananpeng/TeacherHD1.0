@@ -39,17 +39,16 @@ public class DialogRecyleAdapter extends RecyclerView.Adapter<DialogRecyleAdapte
     @Override
     public void onBindViewHolder(final MyViewhoder holder, final int position) {
             holder.textView.setText(prepareSelectCourses.get(position).getSubjectName());
+            holder.sectionName.setText(prepareSelectCourses.get(position).getSectionName());
             holder.linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Message message=new Message();
                     message.obj = prepareSelectCourses.get(position).getTeachBookId();
                     handler.sendMessage(message);
-                    EventBus.getDefault().post(prepareSelectCourses.get(position).getTeachBookId());
                 }
             });
     }
-
     @Override
     public int getItemCount() {
         return prepareSelectCourses.size();
@@ -57,11 +56,12 @@ public class DialogRecyleAdapter extends RecyclerView.Adapter<DialogRecyleAdapte
 
     static  class MyViewhoder extends RecyclerView.ViewHolder {
         LinearLayout linearLayout ;
-        TextView textView;
+        TextView textView,sectionName;
         public MyViewhoder(View itemView) {
             super(itemView);
             textView= (TextView) itemView.findViewById(R.id.item_text);
             linearLayout= (LinearLayout) itemView.findViewById(R.id.item_layout);
+            sectionName= (TextView) itemView.findViewById(R.id.item_tv_cousersuitObject);
         }
   }
 }
