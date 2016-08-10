@@ -19,6 +19,8 @@ public class TreeAdapter<T> extends TreeListViewAdapter<T>
 			IllegalAccessException
 	{
 		super(mTree, context, datas, defaultExpandLevel);
+
+
 	}
 	@Override
 	public View getConvertView(Node node , int position, View convertView, ViewGroup parent) {
