@@ -59,6 +59,8 @@ public class TestFragment extends BaseFragment implements TextWatcher,IDataCallb
     private static int START_SEARCH = 2;
     private static int CLOSE_SEARCH = 1;
     private static int OPEN_SEARCH = 0;
+
+
     private int flag = 0;
     private Handler handler = new Handler(new Handler.Callback() {
         @Override

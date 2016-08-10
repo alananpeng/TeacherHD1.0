@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="floatingactionbuttonplus-1.0.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.lzp.floatingactionbutton/floatingactionbuttonplus/1.0.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.lzp.floatingactionbutton/floatingactionbuttonplus/1.0.0/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.lzp.floatingactionbutton/floatingactionbuttonplus/1.0.0/b2ca2474a2111911e6ae03d5ebe74a0d351799d5/floatingactionbuttonplus-1.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
