@@ -131,15 +131,13 @@ public class AddPrepareLessonsActivity extends FragmentActivity {
         WindowManager m = getWindowManager();
         Display d = m.getDefaultDisplay();
         WindowManager.LayoutParams p = getWindow().getAttributes();
-        p.height = (int) (d.getHeight() * 0.9);
-        p.width = (int) (d.getWidth() * 0.9);
+        p.height = (int) (d.getHeight() * 1);
+        p.width = (int) (d.getWidth() * 1);
         getWindow().setAttributes(p);
     }
-
     private void addOrShowFragment(FragmentTransaction transaction, Fragment fragment) {
         if (currentFragment == fragment)
             return;
-
         if (!fragment.isAdded()) {
             transaction.hide(currentFragment).add(R.id.add_lessons_content, fragment).commit();
         } else {
