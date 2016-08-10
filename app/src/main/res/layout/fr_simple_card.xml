@@ -1,0 +1,19 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+        <TextView
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  教学设计  作用力与反作用力
+                           教材分析：牛顿第一定律和牛顿第二定律解决的是单个物体在不同的力学情境下所遵循的规律问题，但是自然界是物质的，不同的物体之间是相互联系、相互影响、相互作用的。对于力，不能脱离受力物体和施力物体而独立存在，讨论时必然要涉及施力物体与受力物体间的相互作用及它们之间所遵循的规律，牛顿第三定律揭示的恰恰就是这一规律。正是由于牛顿第三定律才使得我们更加全面地认识到物质世界的关系及其运动规律，现实生活中许多实际问题得以圆满顺利地解决。事实上，牛顿第三定律是如此地重要和深入人心，以致我们常常是不自觉地应用却感觉不到它的存在。但是，对具体问题的研究过程中，若细致深入追究起来，又似乎不是那么顺理成章。      教材对于牛顿第三定律的讨论是渐次深入逐层推进的：先通过司空见惯的实例得到物体之间的作用力和反作用力的概念，再通过实验总结出作用力反作用力的定量关系，然后分析汇总得出牛顿第三定律。最后再回到实际应用中去，让学生体会牛顿第三定律的应用，以达到定律的深入理解和融汇贯通的目的。 教学重点：对牛顿第三定律的理解及应用。 教学难点      作用力、反作用力与平衡力的区别。 教学方法  本节课利用实物演示、多媒体计算机等技术营造一种有趣、引人思考的教学环境，通过学生的积极思考与分组动手实验，体现以学生为主体的教学思想，让学生发现问题，思考问题、通过讨论解决问题，学习科学探究的方法，培养学生解决实际问题的能力和合作学习的精神。  "
+            android:id="@+id/card_title_tv" />
+    </LinearLayout>
+
+</RelativeLayout>

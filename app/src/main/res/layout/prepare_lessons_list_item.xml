@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <LinearLayout
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/noet"/>
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/id_treenode_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="mjdsahdj"/>
+        <ImageView
+            android:id="@+id/id_treenode_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/tree_ec"/>
+    </LinearLayout>
+    <View
+        android:layout_marginLeft="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#cccccc"/>
+</LinearLayout>

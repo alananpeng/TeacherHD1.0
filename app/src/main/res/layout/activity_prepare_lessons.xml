@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/theme_color_bg">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:elevation="4dp"
+        android:background="@color/black">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="20dp"
+            android:src="@mipmap/back"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="物理"
+            android:textSize="20dp"
+            android:id="@+id/textView2"
+            android:textColor="@color/white"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText"
+            android:drawableRight="@mipmap/search"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/textView2" />
+    </RelativeLayout>
+
+    <name.quanke.app.libs.emptylayout.EmptyLayout
+        android:id="@+id/prepare_lessons_emptyLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <!--<com.wang.avi.AVLoadingIndicatorView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/avloadingIndicatorView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:indicator="BallPulse"
+                app:indicator_color="@color/theme_color"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center" />-->
+             <LinearLayout
+                 android:orientation="horizontal"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent">
+                 <LinearLayout
+                     android:orientation="vertical"
+                     android:id="@+id/preppare_frag_left"
+                     android:layout_weight="3"
+                     android:layout_width="0dp"
+                     android:background="@color/black_a10_color"
+                     android:layout_height="match_parent">
+
+                 </LinearLayout>
+                 <LinearLayout
+                     android:background="@color/black_a10_color"
+                     android:orientation="vertical"
+                     android:id="@+id/preppare_frag_right"
+                     android:layout_weight="7"
+                     android:layout_width="0dp"
+                     android:layout_height="match_parent">
+
+                 </LinearLayout>
+             </LinearLayout>
+
+        </FrameLayout>
+    </name.quanke.app.libs.emptylayout.EmptyLayout>
+
+</LinearLayout>

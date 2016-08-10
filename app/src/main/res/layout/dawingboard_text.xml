@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.hanboard.teacherhd.android.activity.DawingBoardActivity">
+
+    <Button
+        android:layout_width="53dp"
+        android:layout_height="38dp"
+        android:text="保存"
+        android:id="@+id/btn_save"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"/>
+
+    <Button
+        android:layout_width="53dp"
+        android:layout_height="38dp"
+        android:text="撤销"
+        android:id="@+id/btn_undo"
+        android:layout_below="@+id/btn_save"
+        android:layout_alignLeft="@+id/btn_save"
+        android:layout_alignStart="@+id/btn_save"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="恢复"
+        android:id="@+id/btn_recover"
+        android:layout_below="@+id/btn_undo"
+        android:layout_alignLeft="@+id/btn_undo"
+        android:layout_alignStart="@+id/btn_undo"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="曲线"
+        android:id="@+id/btn_curve"
+        android:layout_below="@+id/btn_recover"
+        android:layout_alignLeft="@+id/btn_recover"
+        android:layout_alignStart="@+id/btn_recover"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="直线"
+        android:id="@+id/btn_line"
+        android:layout_below="@+id/btn_curve"
+        android:layout_alignLeft="@+id/btn_curve"
+        android:layout_alignStart="@+id/btn_curve"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="矩形"
+        android:id="@+id/btn_square"
+        android:layout_below="@+id/btn_line"
+        android:layout_alignLeft="@+id/btn_line"
+        android:layout_alignStart="@+id/btn_line"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="圆形"
+        android:id="@+id/btn_circle"
+        android:layout_below="@+id/btn_square"
+        android:layout_alignLeft="@+id/btn_square"
+        android:layout_alignStart="@+id/btn_square"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="椭圆"
+        android:id="@+id/btn_oval"
+        android:layout_below="@+id/btn_circle"
+        android:layout_alignLeft="@+id/btn_circle"
+        android:layout_alignStart="@+id/btn_circle"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="重做"
+        android:id="@+id/btn_redo"
+        android:layout_below="@+id/btn_oval"
+        android:layout_alignLeft="@+id/btn_oval"
+        android:layout_alignStart="@+id/btn_oval"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="画笔样式"
+        android:id="@+id/btn_paintstyle"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="画笔颜色"
+        android:id="@+id/btn_paintcolor"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="画笔尺寸"
+        android:id="@+id/btn_paintsize"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/btn_redo"
+        android:layout_alignEnd="@+id/btn_redo"/>
+
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sb_size"
+        android:layout_above="@+id/btn_paintstyle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fl_boardcontainer"
+        android:layout_above="@+id/sb_size"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/btn_save"
+        android:layout_toStartOf="@+id/btn_save">
+
+    </FrameLayout>
+
+</RelativeLayout>

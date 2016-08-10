@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.hanboard.teacherhd.android.activity.DialogActivity">
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+            <LinearLayout
+                android:background="@android:color/holo_blue_bright"
+                android:layout_width="match_parent"
+                android:layout_height="48dp">
+            </LinearLayout>
+            <TextView
+                android:onClick="cancal"
+                android:layout_marginRight="8dp"
+                android:layout_alignParentRight="true"
+                android:padding="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="取消"
+                android:textColor="@color/white"
+                android:background="@color/black"
+                android:textSize="16sp"/>
+      </RelativeLayout>
+      <android.support.v7.widget.RecyclerView
+          android:layout_marginTop="48dp"
+          android:layout_gravity="center"
+          android:layout_width="wrap_content"
+          android:id="@+id/ActivityDialog_ryc_head"
+          android:layout_height="128dp"></android.support.v7.widget.RecyclerView>
+
+
+</LinearLayout>

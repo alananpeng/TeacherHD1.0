@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#eef0f4">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:elevation="4dp"
+        android:background="@color/black">
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView4"
+            android:src="@mipmap/back"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_version"
+            android:id="@+id/textView4"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true" />
+        <ImageView
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView6"
+            android:src="@mipmap/search"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:background="@drawable/beike_left_bg"
+            android:layout_marginTop="10dp"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:elevation="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/navy"
+                android:id="@+id/rel_add_textbook"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView7"
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/add_06"/>
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="新增教材"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:elevation="4dp"
+                android:text="已选教材"
+                android:gravity="center"
+                android:textSize="15dp"
+                android:textColor="@color/white"
+                android:id="@+id/textView5"
+                android:background="@drawable/new_lessons_right_top_radius"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+
+            <ListView
+                android:id="@+id/list_textbook"
+                android:divider="@mipmap/hr"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/rel_add_textbook"
+                android:layout_below="@+id/textView5">
+            </ListView>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_marginLeft="10dp"
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <fragment
+                 android:id="@+id/NewLessonsDetailFragment"
+                 android:name="com.hanboard.teacherhd.android.fragment.NewLessonsDetailFragment"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

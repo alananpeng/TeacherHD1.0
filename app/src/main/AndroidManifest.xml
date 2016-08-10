@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hanboard.teacherhd"
+    android:revisionCode="1"
+    android:versionName="0.0.1">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+    <application
+        android:name=".manager.AppContext"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:screenOrientation="landscape"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:windowSoftInputMode="adjustUnspecified|stateHidden">
+        <activity android:name=".android.activity.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".android.activity.MainActivity" />
+        <activity android:name=".android.activity.ClassActivity" />
+        <activity android:name=".android.activity.JiecaoPlayer" />
+        <activity android:name=".android.activity.SelectTextBookActivity" android:theme="@style/dialogActivity"></activity>
+        <activity android:name=".android.activity.DialogActivity"
+            android:theme="@style/dialogActivity">
+        </activity>
+        <receiver android:name=".android.broadCast.WPSReciver_">
+            <intent-filter>
+                <action android:name="com.kingsoft.writer.back.key.down" />
+                <action android:name="cn.wps.moffice.file.close" />
+                <action android:name="com.kingsoft.writer.back.key.down" />
+                <action android:name="com.kingsoft.writer.home.key.down" />
+
+            </intent-filter>
+        </receiver>
+        <activity android:name=".android.activity.TestActivity">
+
+        </activity>
+
+    </application>
+
+</manifest>
