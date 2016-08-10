@@ -13,7 +13,8 @@ public class Urls {
     /*port*/
     public static final String SERVER_PORT = "8084";
     /**SERVER_ADDRESS*/
-    public static final String SERVER_ADDRESS = SERVER_HOST+":"+SERVER_PORT+"/";
+//    public static final String SERVER_ADDRESS = SERVER_HOST+":"+SERVER_PORT+"/";
+    public static final String SERVER_ADDRESS = "http://6d625726.ngrok.natapp.cn/";
     /** 登录接口 */
     public static final String URL_LOGIN = SERVER_ADDRESS+"api/v1/user/login";
     /**获取所有科目*/
