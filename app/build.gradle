@@ -49,4 +49,6 @@ dependencies {
     compile 'it.sephiroth.android.library.picasso:picasso:2.5.2.4b'
     //文件选择
     compile 'com.nononsenseapps:filepicker:3.0.0'
+    //
+    compile 'com.lzy.net:okhttpserver:1.0.1'
 }

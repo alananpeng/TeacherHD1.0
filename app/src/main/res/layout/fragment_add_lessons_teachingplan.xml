@@ -9,6 +9,7 @@
         android:layout_height="80dp"
         android:background="@mipmap/add_lessons_header_05">
         <EditText
+            android:id="@+id/add_lessons_title"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:gravity="center"
@@ -38,55 +39,70 @@
                     android:layout_height="wrap_content"
                     android:text="教学目标"/>
                 <EditText
+                    android:id="@+id/add_lessons_teachingplan_mubiao"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:gravity="left|top"
-                    android:minLines="6"/>
+                    android:hint="1.能结合具体情境，进一步理解加法，减法，乘法和除法的意义。
+2.学会独立思考，感受线段图的直观作用，体会假设，转化等数学思想方法。
+3.获得分析和解决和差问题的一般方法，体会解决问题方法的多样性，发展创新意识。
+4.初步养成乐于思考，勇于质疑，言必有据的良好品质。"
+                    android:minLines="4"/>
                 <TextView
                     android:textSize="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="教学重点"/>
                 <EditText
+                    android:id="@+id/add_lessons_teachingplan_zhongdian"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:gravity="left|top"
-                    android:minLines="6"/>
+                    android:minLines="4"/>
                 <TextView
                     android:textSize="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="教学准备"/>
                 <EditText
+                    android:id="@+id/add_lessons_teachingplan_zhunbei"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:gravity="left|top"
-                    android:minLines="6"/>
+                    android:minLines="4"/>
                 <TextView
                     android:textSize="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="教学过程"/>
                 <EditText
+                    android:id="@+id/add_lessons_teachingplan_guocheng"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:gravity="left|top"
-                    android:minLines="6"/>
+                    android:hint="（一）复习与准备
+1.教师：（出示下图）下面的线段图表示的是什么意思？大家说一说
+2.画线段图表示“男生比女生多3人”
+（1）学生独立画图，一个学生板演，集体订正。
+（2）师：这幅图还可以表示什么意思：请大家说一说。
+（二）教学例题"
+                    android:minLines="4"/>
                 <TextView
                     android:textSize="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="作业布置"/>
                 <EditText
+                    android:id="@+id/add_lessons_teachingplan_zuoyebuzhi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:gravity="left|top"
-                    android:minLines="6"/>
+                    android:minLines="4"/>
             </LinearLayout>
         </ScrollView>
         <LinearLayout

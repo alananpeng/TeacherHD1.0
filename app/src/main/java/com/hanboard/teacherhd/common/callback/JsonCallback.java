@@ -1,0 +1,51 @@
+package com.hanboard.teacherhd.common.callback;
+
+import android.text.TextUtils;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.lzy.okhttputils.OkHttpUtils;
+
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+
+import okhttp3.Response;
+
+public abstract class JsonCallback<T> extends CommonCallback<T> {
+    private Class<T> clazz;
+    private Type type;
+    public JsonCallback(Class<T> clazz) {
+        this.clazz = clazz;
+    }
+    public JsonCallback(Type type) {
+        this.type = type;
+    }
+    @Override
+    public T parseNetworkResponse(Response response) throws Exception {
+        String responseData = response.body().string();
+        if (TextUtils.isEmpty(responseData)) return null;
+        JSONObject jsonObject = new JSONObject(responseData);
+        final String msg = jsonObject.optString("message", "");
+        final String code = jsonObject.optString("code","");
+        String data = jsonObject.optString("data", "");
+        switch (code) {
+            case "200":
+                if (clazz == String.class) return (T) data;
+                if (clazz != null) return new Gson().fromJson(data, clazz);
+                if (type != null) return new Gson().fromJson(data, type);
+                break;
+            case "30010":
+                throw new IllegalStateException("上传失败");
+            default:
+                throw new IllegalStateException("错误代码：" + code + "，错误信息：" + msg);
+        }
+        OkHttpUtils.getInstance().getDelivery().post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(OkHttpUtils.getContext(), "错误代码：" + code + "，错误信息：" + msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+        return null;
+    }
+}

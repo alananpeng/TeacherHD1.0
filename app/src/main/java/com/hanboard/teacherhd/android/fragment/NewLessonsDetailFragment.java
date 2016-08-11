@@ -24,6 +24,7 @@ import com.hanboard.teacherhd.android.model.ISelectTextBookModel;
 import com.hanboard.teacherhd.android.model.impl.SelectTextBookModelImpl;
 import com.hanboard.teacherhd.common.base.BaseFragment;
 import com.hanboard.teacherhd.common.callback.IDataCallback;
+import com.hanboard.teacherhd.common.view.LoadingDialog;
 import com.hanboard.teacherhd.lib.common.utils.SharedPreferencesUtils;
 import com.hanboard.teacherhd.lib.common.utils.ToastUtils;
 
@@ -50,6 +51,11 @@ class NewLessonsDetailFragment extends BaseFragment implements IDataCallback<Dom
     private ISelectTextBookModel iSelectTextBookModel;
     private String mSubjectName;
     private List<Lessons> res = new ArrayList<>();
+    private LoadingDialog loading;
+    private String textbookId;
+    private String chapterId;
+    private String accountId;
+
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
         EventBus.getDefault().register(this);
@@ -64,17 +70,20 @@ class NewLessonsDetailFragment extends BaseFragment implements IDataCallback<Dom
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Lessons ls = (Lessons) parent.getAdapter().getItem(position);
                 if(ls.content.contentTitle.equals("添加课程")){
-                    startActivity(new Intent(context, AddPrepareLessonsActivity.class));
+                    startActivityForResult(new Intent(context, AddPrepareLessonsActivity.class),300);
                 }
             }
         });
     }
     @Subscribe(threadMode = ThreadMode.POSTING)
     void getData(GetLessons getLessons){
+        textbookId = getLessons.textBookId;
+        chapterId = getLessons.chapterId;
+        loading = new LoadingDialog(context,"玩命加载中...");
         int pageNum = 1;
-        String accountId = (String) SharedPreferencesUtils.getParam(context,"id","");
+        accountId = (String) SharedPreferencesUtils.getParam(context,"id","");
         mSubjectName = getLessons.subject;
-        iSelectTextBookModel.getPrepareLessons(getLessons.chapterId,accountId,getLessons.textBookId,String.valueOf(pageNum),this);
+        iSelectTextBookModel.getPrepareLessons(chapterId,accountId,textbookId,String.valueOf(pageNum),this);
     }
     @Override
     public void onDestroy() {
@@ -83,6 +92,8 @@ class NewLessonsDetailFragment extends BaseFragment implements IDataCallback<Dom
     }
     @Override
     public void onSuccess(Domine data) {
+        loading.dismiss();
+        res.clear();
         if(data instanceof LessonsList){
             res = ((LessonsList) data).elements;
             //添加课程
@@ -90,12 +101,32 @@ class NewLessonsDetailFragment extends BaseFragment implements IDataCallback<Dom
             Lessons.ContentBean c = new Lessons.ContentBean();
             c.contentTitle="添加课程";
             l.content = c;
-            res.add(l);
+            res.add(0,l);
             mGdNewLessonsList.setAdapter(new NewLessonsGridViewAdapter(context,R.layout.new_lessons_item,res,mSubjectName));
         }
     }
     @Override
     public void onError(String msg, int code) {
-        ToastUtils.showShort(context,msg+"错误码"+code);
+        loading.dismiss();
+        if(code == 30010) {
+            res.clear();
+            //添加课程
+            Lessons l = new Lessons();
+            Lessons.ContentBean c = new Lessons.ContentBean();
+            c.contentTitle = "添加课程";
+            l.content = c;
+            res.add(0, l);
+            mGdNewLessonsList.setAdapter(new NewLessonsGridViewAdapter(context, R.layout.new_lessons_item, res, mSubjectName));
+        }else {
+            ToastUtils.showShort(context, msg + ",错误码:" + code);
+        }
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 300) {
+//            iSelectTextBookModel.getPrepareLessons(chapterId,accountId,textbookId,String.valueOf(1),this);
+            ToastUtils.showShort(context,"上传成功回来的");
+        }
     }
 }

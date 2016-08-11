@@ -11,24 +11,26 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-
 import com.hanboard.teacherhd.R;
-import com.hanboard.teacherhd.android.adapter.ResAddGdAdapter;
+import com.hanboard.teacherhd.android.activity.AddPrepareLessonsActivity;
+import com.hanboard.teacherhd.android.adapter.ResAddGridViewAdapter;
 import com.hanboard.teacherhd.android.entity.LoadRes;
 import com.hanboard.teacherhd.common.base.BaseFragment;
+import com.hanboard.teacherhd.lib.common.utils.JsonUtil;
+import com.hanboard.teacherhd.lib.common.utils.SharedPreferencesUtils;
+import com.hanboard.teacherhd.lib.common.utils.ToastUtils;
 import com.nononsenseapps.filepicker.FilePickerActivity;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 项目名称：TeacherHD1.0
@@ -37,43 +39,48 @@ import butterknife.ButterKnife;
  * 作者单位：四川汉博德信息技术有限公司
  * 创建时间：2016/8/10 0010 14:15
  */
-public class AddCoursewareFragment extends BaseFragment implements AdapterView.OnItemClickListener{
+public class AddCoursewareFragment extends BaseFragment implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener{
     @BindView(R.id.add_lessons_courseware_gridview)
     GridView addLessonsCoursewareGridview;
     public static final int FILE_CODE = 200;
-    private List<LoadRes> loadResList = new ArrayList<>();
-    private ResAddGdAdapter mAdapter;
-
+    public List<LoadRes> loadResList = new ArrayList<>();
+    private ResAddGridViewAdapter mAdapter;
+    private boolean isShowDelete=false;
+    private Boolean isExit=false;
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
         return inflater.inflate(R.layout.fragment_add_lessons_courseware, container, false);
     }
-
     @Override
     protected void initData() {
-        LoadRes loadRes = new LoadRes();
-        loadRes.format="ADD";
-        loadRes.name = "添加课件";
-        loadResList.add(loadRes);
-        mAdapter = new ResAddGdAdapter(context,R.layout.add_res_load_item,loadResList);
+        mAdapter = new ResAddGridViewAdapter(context,loadResList);
         addLessonsCoursewareGridview.setAdapter(mAdapter);
         addLessonsCoursewareGridview.setOnItemClickListener(this);
-    }
+        addLessonsCoursewareGridview.setOnItemLongClickListener(this);
 
+    }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        LoadRes loadRes = (LoadRes) parent.getAdapter().getItem(position);
-        if (loadRes.format.equals("ADD"))
-        {
-            Intent i = new Intent(context, FilePickerActivity.class);
-            i.putExtra(FilePickerActivity.EXTRA_ALLOW_MULTIPLE, true);
-            i.putExtra(FilePickerActivity.EXTRA_ALLOW_CREATE_DIR, false);
-            i.putExtra(FilePickerActivity.EXTRA_MODE, FilePickerActivity.MODE_FILE);
-            i.putExtra(FilePickerActivity.EXTRA_START_PATH, Environment.getExternalStorageDirectory().getPath());
-            startActivityForResult(i, FILE_CODE);
+
+    }
+    @OnClick({R.id.add_lessons_courseware_save,R.id.add_lessons_courseware_img})
+    void onClick(View view){
+        switch (view.getId()) {
+            case R.id.add_lessons_courseware_img:
+                Intent i = new Intent(context, FilePickerActivity.class);
+                i.putExtra(FilePickerActivity.EXTRA_ALLOW_MULTIPLE, true);
+                i.putExtra(FilePickerActivity.EXTRA_ALLOW_CREATE_DIR, false);
+                i.putExtra(FilePickerActivity.EXTRA_MODE, FilePickerActivity.MODE_FILE);
+                i.putExtra(FilePickerActivity.EXTRA_START_PATH, Environment.getExternalStorageDirectory().getPath());
+                startActivityForResult(i, FILE_CODE);
+                break;
+            case R.id.add_lessons_courseware_save:
+                String res = JsonUtil.toJson(loadResList);
+                SharedPreferencesUtils.setParam(context, "kejian", res);
+                ToastUtils.showShort(context, "课件临时保存成功" + res);
+                break;
         }
     }
-
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -131,15 +138,13 @@ public class AddCoursewareFragment extends BaseFragment implements AdapterView.O
                         mAdapter.notifyDataSetChanged();
                     }
                 } else {
-                    ArrayList<String> paths = data.getStringArrayListExtra
-                            (FilePickerActivity.EXTRA_PATHS);
+                    ArrayList<String> paths = data.getStringArrayListExtra(FilePickerActivity.EXTRA_PATHS);
                     if (paths != null) {
                         for (String path: paths) {
                             Uri uri = Uri.parse(path);
                         }
                     }
                 }
-
             } else {
                 Uri uri = data.getData();
             }
@@ -171,5 +176,35 @@ public class AddCoursewareFragment extends BaseFragment implements AdapterView.O
         }
         return data;
     }
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        if (isShowDelete) {
+            isShowDelete = false;
+        } else {
+            isShowDelete = true;
+            mAdapter.setIsShowDelete(isShowDelete);
+            addLessonsCoursewareGridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    delete(position);
+                    mAdapter = new ResAddGridViewAdapter(context, loadResList);
+                    addLessonsCoursewareGridview.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
+                }
+            });
+        }
+        mAdapter.setIsShowDelete(isShowDelete);
+        return true;
+    }
 
+    private void delete(int position) {
+        List<LoadRes> newList = new ArrayList<>();
+        if(isShowDelete){
+            loadResList.remove(position);
+            isShowDelete=false;
+        }
+        newList.addAll(loadResList);
+        loadResList.clear();
+        loadResList.addAll(newList);
+    }
 }

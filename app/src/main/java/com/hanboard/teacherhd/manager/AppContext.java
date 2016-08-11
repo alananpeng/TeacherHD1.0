@@ -8,9 +8,7 @@ import com.hanboard.teacherhd.lib.common.http.okhttp.OkHttpUtils;
 import com.hanboard.teacherhd.lib.common.http.okhttp.log.LoggerInterceptor;
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
-
 import okhttp3.OkHttpClient;
-
 /**
  * Created by Administrator on 2016/7/16 0016.
  */
@@ -26,6 +24,7 @@ public class AppContext extends Application {
         instance = this;
         /**okHttpinitClient*/
         initOkHttp();
+        com.lzy.okhttputils.OkHttpUtils.init(this);
     }
     /**初始化okhttp*/
    public void initOkHttp(){

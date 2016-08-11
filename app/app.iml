@@ -100,6 +100,8 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.github.quanke/AndroidEmptyLayout/v1.0.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.jakewharton/butterknife/8.2.1/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.lzp.floatingactionbutton/floatingactionbuttonplus/1.0.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.lzy.net/okhttpserver/1.0.1/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.lzy.net/okhttputils/1.7.1/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.nononsenseapps/filepicker/3.0.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.wang.avi/library/1.0.5/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/fm.jiecao/jiecaovideoplayer/2.0/jars" />
@@ -129,6 +131,7 @@
     <orderEntry type="library" exported="" name="gson-2.6.1" level="project" />
     <orderEntry type="library" exported="" name="AndroidEmptyLayout-v1.0.0" level="project" />
     <orderEntry type="library" exported="" name="filepicker-3.0.0" level="project" />
+    <orderEntry type="library" exported="" name="okhttputils-1.7.1" level="project" />
     <orderEntry type="library" exported="" name="floatingactionbuttonplus-1.0.0" level="project" />
     <orderEntry type="library" exported="" name="animated-vector-drawable-23.4.0" level="project" />
     <orderEntry type="library" exported="" name="library-1.0.5" level="project" />
@@ -142,6 +145,7 @@
     <orderEntry type="library" exported="" name="design-23.4.0" level="project" />
     <orderEntry type="library" exported="" name="library-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="FlycoLabelView_Lib-1.0.2" level="project" />
+    <orderEntry type="library" exported="" name="okhttpserver-1.0.1" level="project" />
     <orderEntry type="library" exported="" name="annotations-12.0" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-24.0.0" level="project" />
     <orderEntry type="library" exported="" name="eventbus-3.0.0" level="project" />

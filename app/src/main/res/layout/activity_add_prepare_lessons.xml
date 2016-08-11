@@ -49,10 +49,10 @@
             android:layout_height="match_parent"
             android:background="@mipmap/add_lessons_center_07"/>
         <TextView
-            android:id="@+id/add_lessons_save"
+            android:id="@+id/add_lessons_allsave"
             android:gravity="center"
             android:textColor="@color/white"
-            android:text="全部上传"
+            android:text="下一步,上传"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"

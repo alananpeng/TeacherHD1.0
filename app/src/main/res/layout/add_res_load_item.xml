@@ -1,18 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:gravity="center">
-    <ImageView
-        android:id="@+id/res_load_img"
-        android:layout_width="wrap_content"
+    android:id="@+id/ll_grid_item"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical" >
+    <FrameLayout
+        android:id="@+id/starred_item_layout"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:src="@mipmap/log_mp3"/>
-    <TextView
-        android:id="@+id/res_load_name"
-        android:padding="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="语文"/>
+        android:layout_gravity="center" >
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_marginTop="4dip"
+            android:layout_marginRight="4dip" >
+            <ImageView
+                android:id="@+id/res_load_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/log_mp3"/>
+            <TextView
+                android:id="@+id/res_load_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="45454545"/>
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/delete_markView"
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:adjustViewBounds="true"
+            android:layout_gravity="right|top"
+            android:visibility="gone"
+            android:src="@mipmap/delete"/>
+    </FrameLayout>
 </LinearLayout>

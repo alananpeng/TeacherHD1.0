@@ -1,6 +1,7 @@
 package com.hanboard.teacherhd.android.adapter;
 
 import android.content.Context;
+import android.view.View;
 
 import com.hanboard.teacherhd.R;
 import com.hanboard.teacherhd.android.entity.Lessons;
@@ -33,10 +34,16 @@ public class NewLessonsGridViewAdapter extends CommonAdapter<Lessons> {
     }
     @Override
     protected void fillItemData(CommonViewHolder viewHolder, int position, Lessons item) {
+        if(item.content.contentTitle.equals("添加课程")){
+            viewHolder.setVisibility(R.id.new_item_add, View.VISIBLE);
+            viewHolder.setVisibility(R.id.new_item_content,View.INVISIBLE);
+        }
         viewHolder.setTextForTextView(R.id.new_lessons_title,item.content.contentTitle);
         viewHolder.setTextForTextView(R.id.new_lessons_subject,subjectName);
         viewHolder.setTextForTextView(R.id.new_lessons_suitobject,item.content.contentObject);
         viewHolder.setTextForTextView(R.id.new_lessons_courseHour,item.content.courseHour+"");
         viewHolder.setTextForTextView(R.id.new_lessons_createtime, TimeUtils.getTime(item.content.createTime,new SimpleDateFormat("yyyy-MM-dd")));
     }
+
+
 }

@@ -12,7 +12,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:text="上传课件"
+            android:text="上传习题"
             android:textColor="@color/white"/>
     </RelativeLayout>
     <TextView
@@ -31,7 +31,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
-
         <LinearLayout
             android:padding="20dp"
             android:gravity="center_horizontal"
@@ -39,7 +38,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <ImageView
-                android:id="@+id/add_lessons_courseware_img"
+                android:id="@+id/add_lessons_exercises_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/log_add"/>
@@ -54,23 +53,22 @@
             android:layout_height="match_parent"
             android:padding="10dp">
             <GridView
-                android:id="@+id/add_lessons_courseware_gridview"
+                android:id="@+id/add_lessons_exercises_gridview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:horizontalSpacing="20dp"
                 android:numColumns="10"
                 android:verticalSpacing="20dp">
             </GridView>
-
             <Button
                 android:layout_marginBottom="40dp"
                 android:layout_marginRight="40dp"
-                android:id="@+id/add_lessons_courseware_save"
+                android:id="@+id/add_lessons_exercises_save"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@mipmap/add_lessons_button_10"
-                android:text="保存课件附件"
+                android:text="保存习题附件"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true" />
         </RelativeLayout>

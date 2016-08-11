@@ -33,14 +33,13 @@ public class DowloadDialog implements OnProgressBarListener {
         TextView textView= (TextView) view.findViewById(R.id.dialog_text);
         textView.setText(content);
         mProgressBar= (NumberProgressBar) view.findViewById(R.id.progress);
-        dialog = new AlertDialog.Builder(context, R.style.loading_dialog).create();
+        dialog = new AlertDialog.Builder(context, R.style.Dialog).create();
         dialog.setCancelable(false);
         Window dialogWindow = dialog.getWindow();
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-        dialogWindow.setGravity( Gravity.TOP);
+        dialogWindow.setGravity( Gravity.CENTER);
         dialog.show();
         dialog.getWindow().setContentView(view);
-
     }
     public void setPercent(int progress){
         mProgressBar.setProgress(progress);

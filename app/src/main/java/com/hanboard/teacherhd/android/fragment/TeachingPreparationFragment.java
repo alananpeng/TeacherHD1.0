@@ -22,6 +22,7 @@ import com.hanboard.teacherhd.android.model.ISelectTextBookModel;
 import com.hanboard.teacherhd.android.model.impl.SelectTextBookModelImpl;
 import com.hanboard.teacherhd.common.base.BaseFragment;
 import com.hanboard.teacherhd.common.callback.IDataCallback;
+import com.hanboard.teacherhd.common.view.LoadingDialog;
 import com.hanboard.teacherhd.lib.common.utils.SharedPreferencesUtils;
 import com.hanboard.teacherhd.lib.common.utils.ToastUtils;
 
@@ -46,6 +47,7 @@ public class TeachingPreparationFragment extends BaseFragment implements IDataCa
     public static final int REQUSET = 1;
     private TextBookAllChapterAdapter<Chapter> mAdapter;
     private List<Chapter> listChapter = new ArrayList<>();
+    private LoadingDialog loading;
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
         iSelectTextBookModel = new SelectTextBookModelImpl();
@@ -53,6 +55,7 @@ public class TeachingPreparationFragment extends BaseFragment implements IDataCa
     }
     @Override
     protected void initData(){
+        loading = new LoadingDialog(context,"玩命加载中...");
         String pageNum = "1";
         String accountId = (String) SharedPreferencesUtils.getParam(context,"id","");
         iSelectTextBookModel.getTextbookChapter(pageNum,accountId,this);
@@ -80,6 +83,7 @@ public class TeachingPreparationFragment extends BaseFragment implements IDataCa
             mAdapter = new TextBookAllChapterAdapter<Chapter>(mListTextbook,context,data.elements, 0);
             mListTextbook.setAdapter(mAdapter);
             mAdapter.setOnTreeNodeClickListener(this);
+            loading.dismiss();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
@@ -97,6 +101,7 @@ public class TeachingPreparationFragment extends BaseFragment implements IDataCa
         if(node.getLevel()!=0){
             GetLessons getLessons = new GetLessons();
             getLessons.chapterId = node.getCid();
+            SharedPreferencesUtils.setParam(context,"chapterId",node.getCid());
             getLessons.textBookId = (String) SharedPreferencesUtils.getParam(context,"textBookId","");
             getLessons.subject = (String) SharedPreferencesUtils.getParam(context,"subject","");
             EventBus.getDefault().post(getLessons);
