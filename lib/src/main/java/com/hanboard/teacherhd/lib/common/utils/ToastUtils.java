@@ -89,5 +89,8 @@ public class ToastUtils
         if (isShow)
             Toast.makeText(context, message, duration).show();
     }
+    public static void successful(Context context){
+        showShort(context,"获取数据成功啦...");
+    }
 
 }

@@ -48,5 +48,5 @@ public class Urls {
     /**
      * 通过备课信息ID获取备课信息详细信息
      */
-    public static  final  String URL_GETPRECOURSEWARE=SERVER_ADDRESS+ "api/v1/chaptercontent/findByChapterId";
+    public static  final  String URL_GETPRECOURSEWARE=SERVER_ADDRESS+ "api/v1/content/findInfoByContentId";
 }

@@ -17,12 +17,6 @@ public class Constants {
     public static  final  String CURSOR_NAME="cursorName";
     public static  final  String USER_ID="id";
     public static  final  String Cursor_ID="CourseWareId";
-    public static final  String  TEACHING_T="教学目标";
-    public static final  String  TEACHING_I="教学重点";
-    public static final  String TEACHING_P="教学准备";
-    public static final  String TEACHING_G="教学过程";
-    public static final  String TEACHING_H="作业布置";
-    public static  final String[] COURSETITLES = {TEACHING_T,TEACHING_I,TEACHING_P,TEACHING_G,TEACHING_H };
     public static  final  String TYPE_MP3=".mp3";
     public static  final  String TYPE_MP4=".mp4";
     public static  final  String TYPE_WORD=".dox";
