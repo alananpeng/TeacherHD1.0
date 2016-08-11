@@ -21,8 +21,7 @@ import com.hanboard.teacherhd.android.model.IClassShowCouseModel;
 import com.hanboard.teacherhd.android.model.impl.ClassShowCouseModelImp;
 import com.hanboard.teacherhd.common.base.BaseActivity;
 import com.hanboard.teacherhd.common.callback.IDataCallback;
-
-import org.greenrobot.eventbus.EventBus;
+import com.hanboard.teacherhd.lib.common.utils.JsonUtil;
 
 import butterknife.BindColor;
 import butterknife.BindView;
@@ -63,12 +62,14 @@ public class ClassActivity extends BaseActivity implements IDataCallback<Domine>
     private static final String TAG = "ClassActivity";
     private CoursewareInfo mCoursewareInfo;
     public static String TEACHINGPLAN ="teachplan";
+    public static String COURSEWARES="coursewares";
+    public static String EXERCISES ="exercise";
     @Override
     protected void initContentView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_class);
         iClassShowCouseModel=new ClassShowCouseModelImp();
-       // iClassShowCouseModel.getAllCouseWareInfo(getIntent().getStringExtra(PrepareLessonsDetailFragment.CONTENTID),this,this);
-        iClassShowCouseModel.getAllCouseWareInfo("02418kwyi3fsd654fsa14f41f54sdf45",this,this);
+        iClassShowCouseModel.getAllCouseWareInfo(getIntent().getStringExtra(PrepareLessonsDetailFragment.CONTENTID),this,this);
+        //iClassShowCouseModel.getAllCouseWareInfo("02418kwyi3fsd654fsa14f41f54sdf45",this,this);
         ButterKnife.bind(this);
        showProgress("正在加载中...");
     }
@@ -80,15 +81,11 @@ public class ClassActivity extends BaseActivity implements IDataCallback<Domine>
         }
         if (!mTeachingPlanFragment.isAdded()) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-           /* LessonPlan lessonPlan = new LessonPlan();
-            lessonPlan.contentId="123456798";*/
             LessonPlan lessonPlan = mCoursewareInfo.lessonPlan;
             Bundle bundle = new Bundle();
             bundle.putSerializable(TEACHINGPLAN,lessonPlan);
             mTeachingPlanFragment.setArguments(bundle);
             fragmentTransaction.add(R.id.lnl_class_content,mTeachingPlanFragment).commit();
-
-           // EventBus.getDefault().post(lessonPlan);
             currentFragment = mTeachingPlanFragment;
             reset();
             //变化指示器
@@ -178,7 +175,20 @@ public class ClassActivity extends BaseActivity implements IDataCallback<Domine>
         if (currentFragment == fragment)
             return;
         if (!fragment.isAdded()) {
-            transaction.hide(currentFragment).add(R.id.lnl_class_content, fragment).commit();
+            transaction.hide(currentFragment).add(R.id.lnl_class_content, fragment);
+            if (fragment instanceof  CourseWareFragment){
+                String courseWareJson = JsonUtil.toJson(mCoursewareInfo.courseWares);
+                Bundle bundle = new Bundle();
+                bundle.putString(COURSEWARES,courseWareJson);
+                fragment.setArguments(bundle);
+            }else if (fragment instanceof ExercisesFragment){
+                String courseWareJson = JsonUtil.toJson(mCoursewareInfo.exercises);
+                Bundle bundle = new Bundle();
+                bundle.putString(EXERCISES,courseWareJson);
+                fragment.setArguments(bundle);
+            }
+            transaction.commit();
+
         } else {
             transaction.hide(currentFragment).show(fragment).commit();
         }
@@ -195,7 +205,6 @@ public class ClassActivity extends BaseActivity implements IDataCallback<Domine>
         if (data instanceof CoursewareInfo){
             mCoursewareInfo=((CoursewareInfo) data);
             initTab();
-            Log.i(TAG, "onSuccess: =================================="+mCoursewareInfo.courseWares.get(0).courseWareTitle);
         }
     }
     @Override

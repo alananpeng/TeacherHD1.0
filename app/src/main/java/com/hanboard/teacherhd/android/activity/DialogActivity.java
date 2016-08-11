@@ -101,6 +101,7 @@ public class DialogActivity extends Activity {
             @Override
             public void onError(String msg, int code) {
                 ToastUtils.showShort(getApplication(),msg+code);
+                mLoadingDialog.dismiss();
             }
         });
 
