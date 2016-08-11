@@ -11,5 +11,6 @@ public class Exercises extends Domine{
     public String exercisesUrl;
 
     public String contentId;
+    public  String  exercisesType;
 
 }

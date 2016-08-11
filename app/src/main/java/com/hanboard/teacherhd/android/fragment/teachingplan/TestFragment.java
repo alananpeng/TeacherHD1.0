@@ -1,5 +1,6 @@
 package com.hanboard.teacherhd.android.fragment.teachingplan;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -24,6 +25,7 @@ import com.hanboard.teacherhd.android.entity.PrepareChapter;
 import com.hanboard.teacherhd.android.entity.listentity.LessonsList;
 import com.hanboard.teacherhd.android.entity.listentity.ListChapter;
 import com.hanboard.teacherhd.android.entity.tree.Node;
+import com.hanboard.teacherhd.android.eventBusBean.BookAndChapterId;
 import com.hanboard.teacherhd.android.model.IPrepareLessonsModel;
 import com.hanboard.teacherhd.android.model.impl.PrepareLessonsModelImpl;
 import com.hanboard.teacherhd.common.base.BaseFragment;
@@ -55,15 +57,10 @@ public class TestFragment extends BaseFragment implements TextWatcher,IDataCallb
     @BindView(R.id.prepare_lessons_seachlist)
     ListView mPrepareLessonsSeachlist;
     private IPrepareLessonsModel iPrepareLessonsModel;
-    private List<Chapter> mDatas = new ArrayList<Chapter>();
     private TreeListViewAdapter mAdapter;
-    private TextBookAllChapterAdapter mTreeAdapter;
     private SearchListAdapter mSearchListAdapter;
-    private static int START_SEARCH = 2;
-    private static int CLOSE_SEARCH = 1;
-    private static int OPEN_SEARCH = 0;
-
     private static final String TAG = "TestFragment";
+    public static final String BOOKANDCHAPTERID = "bookeandchaterID";
     private int flag = 0;
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
@@ -72,7 +69,6 @@ public class TestFragment extends BaseFragment implements TextWatcher,IDataCallb
             return false;
         }
     });
-
 
 
     @Override
@@ -134,19 +130,16 @@ public class TestFragment extends BaseFragment implements TextWatcher,IDataCallb
     public void onSuccess(Domine data) {
         if (data instanceof ListChapter){
             try {
-                mAdapter = new TextBookAllChapterAdapter<Chapter>(mLvChapterList,context,((ListChapter) data).chapters, 0);
+                List<Chapter> chapters = ((ListChapter) data).chapters;
+                mAdapter = new TextBookAllChapterAdapter<Chapter>(mLvChapterList,context,chapters, 0);
                 mLvChapterList.setAdapter(mAdapter);
                 mAdapter.setOnTreeNodeClickListener(this);
+                BookAndChapterId bookAndChapterId = new BookAndChapterId(textBookId, chapters.get(0).getId());
+                EventBus.getDefault().post(bookAndChapterId);
+                SharedPreferencesUtils.setParam(context,BOOKANDCHAPTERID,bookAndChapterId);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
-        }else  if (data instanceof  Elements){
-           // Log.e(TAG, "onSuccess: ======================"+((PrepareChapter)((Elements) data).elements).getPrepareContent().getContentObject() );
-           // List<PrepareChapter> b = ((Elements) data).elements;
-
-           EventBus.getDefault().post(((Elements) data).elements);
-          //  Log.e(TAG, "onSuccess: ======================"+b.get(1).content.getContentTitle());
-
         }
     }
 
@@ -162,6 +155,7 @@ public class TestFragment extends BaseFragment implements TextWatcher,IDataCallb
 
     @Override
     public void onClick(Node node, int position) {
-        iPrepareLessonsModel.getChapterDetials((String)SharedPreferencesUtils.getParam(context,"id","null"),node.getCid(),textBookId,"1",this);
+       // ToastUtils.showShort(context,textBookId+"=========================="+node.getCid());
+        EventBus.getDefault().post(new BookAndChapterId(textBookId,node.getCid()));
     }
 }

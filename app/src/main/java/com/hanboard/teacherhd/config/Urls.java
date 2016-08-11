@@ -13,8 +13,8 @@ public class Urls {
     /*port*/
     public static final String SERVER_PORT = "8084";
     /**SERVER_ADDRESS*/
-//    public static final String SERVER_ADDRESS = SERVER_HOST+":"+SERVER_PORT+"/";
-    public static final String SERVER_ADDRESS = "http://6d625726.ngrok.natapp.cn/";
+    public static final String SERVER_ADDRESS = SERVER_HOST+":"+SERVER_PORT+"/";
+    //public static final String SERVER_ADDRESS = "http://6d625726.ngrok.natapp.cn/";
     /** 登录接口 */
     public static final String URL_LOGIN = SERVER_ADDRESS+"api/v1/user/login";
     /**获取所有科目*/
@@ -45,4 +45,8 @@ public class Urls {
      * 通过章节id 账号id 课本id获取该章节下所有备课信息
      */
     public static  final  String URL_GETPREPARECHATER=SERVER_ADDRESS+ "api/v1/chaptercontent/findByChapterId";
+    /**
+     * 通过备课信息ID获取备课信息详细信息
+     */
+    public static  final  String URL_GETPRECOURSEWARE=SERVER_ADDRESS+ "api/v1/chaptercontent/findByChapterId";
 }

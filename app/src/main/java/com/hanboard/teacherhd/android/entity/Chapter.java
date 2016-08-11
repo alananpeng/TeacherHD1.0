@@ -7,6 +7,11 @@ import com.hanboard.teacherhd.android.entity.tree.TreeNodeLabel;
 import com.hanboard.teacherhd.android.entity.tree.TreeNodePid;
 
 public class Chapter{
+	public String getId() {
+
+		return id;
+	}
+
 	@TreeNodeCId
 	private String id;
 	@TreeNodeId

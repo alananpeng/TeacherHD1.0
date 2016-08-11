@@ -82,6 +82,7 @@ public class HomeFragment extends BaseFragment {
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.setCustomAnimations(R.anim.zoomin, R.anim.zoomout);
             ft.replace(R.id.lnl_main_content, testFragment);
+            ft.addToBackStack(null);
             ft.commit();
         }
     }
