@@ -68,6 +68,7 @@ public class CursorGridViewAdapter<T> extends CommonAdapter<T> {
                     viewHolder.setImageForView(R.id.cursor_iamge_item,R.mipmap.log_mp3);
                 else  if (courseWareTypeInt==8)
                     viewHolder.setImageForView(R.id.cursor_iamge_item,R.mipmap.log_pdf);
+                else  viewHolder.setImageForView(R.id.cursor_iamge_item,R.mipmap.log_pdf);
             }
         }else  viewHolder.setTextForTextView(R.id.cursor_tv_item,"还没有上传资料");
 
@@ -79,7 +80,7 @@ public class CursorGridViewAdapter<T> extends CommonAdapter<T> {
           viewHolder.getContentView().setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View view) {
-                  Toast.makeText(mContext.getApplicationContext(), "点击了"+position, Toast.LENGTH_SHORT).show();
+
               }
           });
     }

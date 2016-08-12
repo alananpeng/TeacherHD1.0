@@ -1,6 +1,7 @@
 package com.hanboard.teacherhd.android.fragment;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -14,14 +15,13 @@ import com.hanboard.teacherhd.R;
 import com.hanboard.teacherhd.android.activity.ClassActivity;
 import com.hanboard.teacherhd.android.entity.LessonPlan;
 import com.hanboard.teacherhd.common.base.BaseFragment;
-import com.hanboard.teacherhd.config.Constants;
 import com.hanboard.teacherhd.lib.common.utils.ToastUtils;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import name.quanke.app.libs.emptylayout.EmptyLayout;
 
 /**
  * 项目名称：TeacherHD
@@ -32,45 +32,37 @@ import java.util.ArrayList;
  */
 public class TeachingPlanFragment extends BaseFragment implements OnTabSelectListener {
 
-    private ArrayList<android.support.v4.app.Fragment> mFragments = new ArrayList<>();
-    private String[] mTitles=SimpleCardFragment.COURSETITLES;
-
+    private ArrayList<Fragment> mFragments = new ArrayList<>();
+    private String[] mTitles = SimpleCardFragment.COURSETITLES;
     private MyPagerAdapter mAdapter;
-    private  LessonPlan mPlans;
+    private LessonPlan mPlans;
+
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
-       // EventBus.getDefault().register(this);
-        return inflater.inflate(R.layout.fragment_teaching_plan, container, false);
+        // EventBus.getDefault().register(this);
+        View view = inflater.inflate(R.layout.fragment_teaching_plan, container, false);
+        return view;
     }
+
     @Override
     protected void initData() {
         Bundle bundle = getArguments();
-        mPlans= (LessonPlan) bundle.getSerializable(ClassActivity.TEACHINGPLAN);
+        mPlans = (LessonPlan) bundle.getSerializable(ClassActivity.TEACHINGPLAN);
         if (mPlans != null) {
-            ToastUtils.successful(context);
+            for (String title : mTitles) {
+                mFragments.add(SimpleCardFragment.getInstance(title, mPlans));
+            }
+            View decorView = getActivity().getWindow().getDecorView();
+            ViewPager vp = (ViewPager) getRootView().findViewById(R.id.vp);
+            mAdapter = new MyPagerAdapter(getActivity().getSupportFragmentManager());
+            vp.setAdapter(mAdapter);
+            /** tab固定宽度 */
+            SlidingTabLayout tabLayout_2 = (SlidingTabLayout) getRootView().findViewById(R.id.tl_2);
+            tabLayout_2.setViewPager(vp);
+        } else{
+            ToastUtils.showShort(context, "没有备课");
         }
-        for (String title :mTitles ) {
-            mFragments.add(SimpleCardFragment.getInstance(title,mPlans));
-        }
-        View decorView = getActivity().getWindow().getDecorView();
-        ViewPager vp = (ViewPager) getRootView().findViewById(R.id.vp);
-        mAdapter = new MyPagerAdapter(getActivity().getSupportFragmentManager());
-        vp.setAdapter(mAdapter);
-        /** tab固定宽度 */
-        SlidingTabLayout tabLayout_2= (SlidingTabLayout)getRootView().findViewById(R.id.tl_2);
-        tabLayout_2.setViewPager(vp);
-    }
-    /*@Subscribe(threadMode = ThreadMode.MAIN)
-    public void doResult(LessonPlan plans){
-        mPlans=plans;
-        ToastUtils.showShort(context,"获取数据成功");
-        ToastUtils.successful(context);
-    }*/
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-       // EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -81,6 +73,14 @@ public class TeachingPlanFragment extends BaseFragment implements OnTabSelectLis
     @Override
     public void onTabReselect(int position) {
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
@@ -99,7 +99,7 @@ public class TeachingPlanFragment extends BaseFragment implements OnTabSelectLis
         }
 
         @Override
-        public android.support.v4.app.Fragment getItem(int position) {
+        public Fragment getItem(int position) {
             return mFragments.get(position);
 
         }

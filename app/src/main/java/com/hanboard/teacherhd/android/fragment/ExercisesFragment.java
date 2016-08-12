@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,8 @@ import com.hanboard.teacherhd.config.Constants;
 import com.hanboard.teacherhd.lib.common.utils.JsonUtil;
 import com.hanboard.teacherhd.lib.common.utils.SDCardHelper;
 import com.hanboard.teacherhd.lib.common.utils.ToastUtils;
+import com.lzy.okhttputils.OkHttpUtils;
+import com.lzy.okhttputils.callback.FileCallback;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -34,6 +37,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import name.quanke.app.libs.emptylayout.EmptyLayout;
+import okhttp3.Call;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * 项目名称：TeacherHD
@@ -46,23 +52,18 @@ public class ExercisesFragment extends BaseFragment {
 
     @BindView(R.id.exercise_gv_cursor)
     GridView exerciseGvCursor;
-    @BindView(R.id.emptLayout)
-    EmptyLayout emptLayout;
-    private DowloadDialog mDialog;
+    public DowloadDialog mDialog;
     private CursorGridViewAdapter adapter;
+    public static String EXERCISESWAREURL = "courseWareUrl";
+    public static String EXERCISESTITLE = "courseWareTitle";
     private static final String TAG = "ExercisesFragment";
     private List<Exercises> mExercises = new ArrayList<>();
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message message) {
-            mDialog.setPercent(message.what);
-            if (message.what == 100) {
-                String path = SDCardHelper.getSDCardPath() + File.separator + "我的老师.ppt";
-                openFile(path);
-                mDialog.dismiss();
-                mDialog = null;
+            if (message.obj != null) {
+                openFile((String) message.obj);
             }
-
             return false;
         }
     });
@@ -81,49 +82,64 @@ public class ExercisesFragment extends BaseFragment {
         String exerciseJsonString = getArguments().getString(ClassActivity.EXERCISES, "");
         mExercises = JsonUtil.fromJson(exerciseJsonString, new TypeToken<List<Exercises>>() {
         }.getType());
-        adapter = new CursorGridViewAdapter(getContext(), R.layout.item_cursorfragment, mExercises);
+        adapter = new CursorGridViewAdapter(context, R.layout.item_cursorfragment, mExercises);
         exerciseGvCursor.setAdapter(adapter);
         exerciseGvCursor.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            private CourseWare item;
-
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getActivity(), "点击了" + i, Toast.LENGTH_SHORT).show();
-                item = (CourseWare) (adapterView.getAdapter().getItem(i));
-                if (item.courseWareType.equals("5") || item.courseWareType.equals("6")) {
+                Exercises item;
+                DowloadDialog dowloadDialog;
+                item = (Exercises) (adapterView.getAdapter().getItem(i));
+                if (item.exercisesType.equals("5") || item.exercisesType.equals("6")) {
                     Intent intent = new Intent(context, JiecaoPlayer.class);
-                    intent.putExtra("", "");
+                    intent.putExtra(EXERCISESTITLE, item.exercisesTitle);
+                    intent.putExtra(EXERCISESWAREURL, item.exercisesUrl);
                     startActivity(intent);
                 } else {
-                    ToastUtils.showShort(context, "打开WPS");
-                    //  showProgress("正在加载中....");
-                    mDialog = new DowloadDialog(context, "正在下載中...");
-                    new Thread() {
-                        @Override
-                        public void run() {
-                            super.run();
-                            int J = 0;
-                            for (int i = 0; i <= 10; i++) {
+                    File file = new File("/sdcard/temp/Hanboard/Exercises/" + item.exercisesTitle);
+                    if (file.exists()) {
+                        ToastUtils.showShort(context, file.getName() + "直接打开...");
+                        /*Message msg = new Message();
+                        msg.obj = file.getAbsolutePath();
+                        handler.sendMessage(msg);*/
+                        openFile(file.getAbsolutePath());
+                        openFile("/sdcard/temp/Hanboard/Exercises/" + item.exercisesTitle);
+                    } else {
+                        mDialog = new DowloadDialog(context, "正在下载中,请稍等...");
+                        OkHttpUtils.get(item.exercisesUrl)//
+                                .tag(this)//
+                                .execute(new FileCallback("/sdcard/temp/Hanboard/Exercises/", item.exercisesTitle) {  //文件下载时，需要指定下载的文件目录和文件名
+                                    @Override
+                                    public void onResponse(boolean isFromCache, File file, Request request, @Nullable Response response) {
+                                        // file 即为文件数据，文件保存在指定目录
+                                        mDialog.dismiss();
+                                        mDialog = null;
+                                        ToastUtils.showShort(context, file.getName() + "下载成功");
+                                       /* Message msg = new Message();
+                                        msg.obj = file.getAbsolutePath();
+                                        handler.sendMessage(msg);*/
+                                        openFile(file.getAbsolutePath());
+                                    }
 
-                                Message message = new Message();
-                                message.what = J;
-                                handler.sendMessage(message);
-                                J += 10;
-                                try {
-                                    Thread.sleep(1000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
+                                    @Override
+                                    public void downloadProgress(long currentSize, long totalSize, float progress, long networkSpeed) {
+                                        //这里回调下载进度(该回调在主线程,可以直接更新ui)
+                                        mDialog.setPercent(Math.round(progress));
 
-
-                            // File file = new File(getSDCardPath() + File.separator + dir);
-
-                        }
-                    }.start();
+                                    }
+                                    @Override
+                                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+                                        super.onError(isFromCache, call, response, e);
+                                        ToastUtils.showShort(context,"下载失败...");
+                                        mDialog.dismiss();
+                                        mDialog = null;
+                                    }
+                                });
+                    }
                 }
             }
         });
+//////////////////////////////////////////////////////////////
     }
 
     /**
@@ -132,6 +148,7 @@ public class ExercisesFragment extends BaseFragment {
      * @param path
      * @return
      */
+
     private boolean openFile(String path) {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
@@ -163,3 +180,7 @@ public class ExercisesFragment extends BaseFragment {
 
 
 }
+
+
+
+

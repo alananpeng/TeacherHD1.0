@@ -1,6 +1,7 @@
 package com.hanboard.teacherhd.android.fragment;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,15 +61,13 @@ public class PrepareLessonsDetailFragment extends BaseFragment implements IDataC
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void doResultInt(BookAndChapterId ids) {
-            initDatas(ids);
-            onStart();
+        Log.i("=========", "doResultInt: "+ids.getTextBookId()+"========="+ids.getChapterId());
+        initDatas(ids);
     }
     private void initDatas(BookAndChapterId id) {
         showProgress("正在加载中....");
+        Log.i("PrepareLessonsDetail", "initDatas: "+(String)SharedPreferencesUtils.getParam(context,"id","null")+"==="+id.getChapterId()+"==="+id.getTextBookId());
         iPrepareLessonsModel.getChapterDetials((String)SharedPreferencesUtils.getParam(context,"id","null"),id.getChapterId(),id.getTextBookId(),"1",this);
-        mAdapter = new PrepareLessonsDetailGirdViewAdapter(context, R.layout.new_lessons_item, mElements.elements);
-        mGdPrepareLessons.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
         mGdPrepareLessons.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -88,12 +87,17 @@ public class PrepareLessonsDetailFragment extends BaseFragment implements IDataC
     public void onSuccess(Domine data) {
          disProgress();
         if (data instanceof Elements) {
+            mAdapter=null;
+            mElements=null;
             mElements = (Elements<PrepareChapter>) data;
+            Log.i("=========", "doResultInt: ==下载成功了"+Thread.currentThread().getName());
+            mAdapter = new PrepareLessonsDetailGirdViewAdapter(context, R.layout.new_lessons_item, mElements.elements);
+            mGdPrepareLessons.setAdapter(mAdapter);
+            mAdapter.notifyDataSetChanged();
         }
     }
     @Override
     public void onError(String msg, int code) {
         disProgress();
-        ToastUtils.showShort(context,msg+code);
     }
 }

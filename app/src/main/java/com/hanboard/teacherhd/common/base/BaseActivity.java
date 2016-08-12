@@ -2,8 +2,12 @@ package com.hanboard.teacherhd.common.base;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
@@ -15,9 +19,18 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.hanboard.teacherhd.R;
+import com.hanboard.teacherhd.android.activity.EmptyClass;
+import com.hanboard.teacherhd.android.broadCast.NetBrodeCaset;
+import com.hanboard.teacherhd.android.model.InetEventHandler;
 import com.hanboard.teacherhd.common.tools.SystemBarTintManager;
 import com.hanboard.teacherhd.common.view.LoadingDialog;
+import com.hanboard.teacherhd.lib.common.utils.NetUtil;
+import com.hanboard.teacherhd.lib.common.utils.ToastUtils;
 import com.hanboard.teacherhd.lib.handle.UIHandler;
+import com.hanboard.teacherhd.manager.AppContext;
+
+import name.quanke.app.libs.emptylayout.EmptyLayout;
+
 /**
  * 项目名称：TeacherHD
  * 类描述：activity基类
@@ -45,7 +58,22 @@ public abstract class BaseActivity extends FragmentActivity {
         }
         initContentView(savedInstanceState);
         setHandler();
+
     }
+
+    public void initView() {
+        if (AppContext.mNetWorkState==NetUtil.NETWORN_NONE){
+            ToastUtils.showShort(this,"当前无网络..");
+          /*  Intent in=new Intent(this,EmptyClass.class);
+            in.putExtra("error",1);
+            startActivity(in);
+            finish();
+            EmptyLayout emptyLayout = new EmptyLayout(me);
+            emptyLayout.showError(R.mipmap.add_06,"wangluo liansjihai");
+            setContentView(emptyLayout);*/
+        }
+    }
+
     @TargetApi(19)
     private void setTranslucentStatus(boolean on) {
         Window win = getWindow();
@@ -136,5 +164,9 @@ public abstract class BaseActivity extends FragmentActivity {
     protected void disProgress() {
        loadingDialog.dismiss();
     }
+
+
+
+
 
 }

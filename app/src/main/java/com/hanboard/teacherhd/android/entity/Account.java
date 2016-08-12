@@ -14,7 +14,7 @@ public class Account extends Domine{
     public String nickName;
     public String spell;
     public String operator;
-    public Date operateTime;
+    public long operateTime;
     public String phone;
     public String email;
     public String number;

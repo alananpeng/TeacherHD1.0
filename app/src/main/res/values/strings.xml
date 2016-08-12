@@ -21,4 +21,5 @@
     <string name="search_content">请输入搜索的内容</string>
     <string name="selectSubject">选择教材</string>
     <string name="only_format">* 只能上传PPT,WORD,MP4,MP3,PDF,EXCEL格式文件</string>
+    <string name="title_activity_empty_class">EmptyClass</string>
 </resources>

@@ -27,6 +27,7 @@
         <!-- 模糊 -->
         <item name="android:backgroundDimEnabled">true</item>
     </style>
+
     <style name="Dialog" parent="android:style/Theme.Dialog">
         <item name="android:background">#00000000</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -45,4 +46,13 @@
         <item name="colorPrimary">#9fc6fb</item>
         <item name="colorAccent">#cccccc</item>
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

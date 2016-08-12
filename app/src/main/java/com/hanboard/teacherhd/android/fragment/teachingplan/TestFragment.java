@@ -135,7 +135,7 @@ public class TestFragment extends BaseFragment implements TextWatcher,IDataCallb
                 mLvChapterList.setAdapter(mAdapter);
                 mAdapter.setOnTreeNodeClickListener(this);
                 BookAndChapterId bookAndChapterId = new BookAndChapterId(textBookId, chapters.get(0).getId());
-                EventBus.getDefault().post(bookAndChapterId);
+                //EventBus.getDefault().post(bookAndChapterId);
                 SharedPreferencesUtils.setParam(context,BOOKANDCHAPTERID,bookAndChapterId);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
@@ -155,7 +155,6 @@ public class TestFragment extends BaseFragment implements TextWatcher,IDataCallb
 
     @Override
     public void onClick(Node node, int position) {
-       // ToastUtils.showShort(context,textBookId+"=========================="+node.getCid());
         EventBus.getDefault().post(new BookAndChapterId(textBookId,node.getCid()));
     }
 }

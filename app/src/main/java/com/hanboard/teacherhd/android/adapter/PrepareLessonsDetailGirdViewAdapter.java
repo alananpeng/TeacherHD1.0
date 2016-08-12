@@ -33,12 +33,13 @@ public class PrepareLessonsDetailGirdViewAdapter extends CommonAdapter<PrepareCh
 
     @Override
     protected void fillItemData(CommonViewHolder viewHolder, int position, PrepareChapter item) {
-                  viewHolder.setTextForTextView(R.id.new_lessons_subject,item.content.getContentObject());
-                  viewHolder.setTextForTextView(R.id.new_lessons_title,item.getTitle());
-                  viewHolder.setTextForTextView(R.id.new_lessons_suitobject,item.content.getContentObject());
-                  viewHolder.setTextForTextView(R.id.new_lessons_courseHour,item.content.getCourseHour()+"");
-                  viewHolder.setTextForTextView(R.id.new_lessons_createtime, TimeUtils.getTime(item.getCreateTime(),TimeUtils.DATE_FORMAT_DATE)+"         最后修改:"+item.content.getUpdateTime());
-                  viewHolder.setTextForTextView(R.id.new_lessons_title,item.getTitle());
+
+            viewHolder.setTextForTextView(R.id.new_lessons_subject,item.content.getContentObject());
+            viewHolder.setTextForTextView(R.id.new_lessons_title,item.getTitle());
+            viewHolder.setTextForTextView(R.id.new_lessons_suitobject,item.content.getContentObject());
+            viewHolder.setTextForTextView(R.id.new_lessons_courseHour,item.content.getCourseHour()+"");
+            viewHolder.setTextForTextView(R.id.new_lessons_createtime, TimeUtils.getTime(item.getCreateTime(),TimeUtils.DATE_FORMAT_DATE)+"         最后修改:"+item.content.getUpdateTime());
+            viewHolder.setTextForTextView(R.id.new_lessons_title,item.getTitle());
 
     }
 }

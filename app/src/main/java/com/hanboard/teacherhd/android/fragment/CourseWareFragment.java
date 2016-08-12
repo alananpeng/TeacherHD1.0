@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -85,8 +86,6 @@ public class CourseWareFragment extends BaseFragment {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                Toast.makeText(getActivity(), "点击了"+i, Toast.LENGTH_SHORT).show();
                 item = (CourseWare)(adapterView.getAdapter().getItem(i));
                 if (item.courseWareType.equals("5")||item.courseWareType.equals("6")){
                     Intent intent=new Intent(context, JiecaoPlayer.class);
@@ -94,29 +93,44 @@ public class CourseWareFragment extends BaseFragment {
                     intent.putExtra(COURSEWARETITLE,item.courseWareTitle);
                     startActivity(intent);
                 }else {
-                    ToastUtils.showShort(context,"打开WPS");
-                    //  showProgress("正在加载中....");
-                    dowload = new DowloadDialog(context,"正在下载中,请稍等...");
-                    OkHttpUtils.get("http://sw.bos.baidu.com/sw-search-sp/software/a0dccefe09871/pptvsetup_3.7.0.0007_forbd.exe")//
-                            .tag(this)//
-                            .execute(new FileCallback("/sdcard/temp/Hanboard/", item.courseWareTitle) {  //文件下载时，需要指定下载的文件目录和文件名
-                                @Override
-                                public void onResponse(boolean isFromCache, File file, Request request, @Nullable Response response) {
-                                    // file 即为文件数据，文件保存在指定目录
-                                    dowload.dismiss();
-                                    dowload = null;
-                                    ToastUtils.showShort(context,file.getName()+"下载成功");
-                                    Message msg = new Message();
-                                    msg.obj = file.getAbsolutePath();
-                                    handler.sendMessage(msg);
-                                }
-                                @Override
-                                public void downloadProgress(long currentSize, long totalSize, float progress, long networkSpeed) {
-                                    //这里回调下载进度(该回调在主线程,可以直接更新ui)
-                                    dowload.setPercent(Math.round(progress));
+                    File file = new File(SDCardHelper.getSDCardPath() + File.separator + "temp"+File.separator+"Hanboard"+File.separator+item.courseWareTitle);
+                    if(file.exists()){
+                        ToastUtils.showShort(context,file.getName()+"直接打开...");
+                        Message msg = new Message();
+                        msg.obj = file.getAbsolutePath();
+                        handler.sendMessage(msg);
+                    }else {
+                        dowload = new DowloadDialog(context,"正在下载中,请稍等...");
+                        OkHttpUtils.get(item.courseWareUrl)//
+                                .tag(this)//
+                                .execute(new FileCallback("/sdcard/temp/Hanboard/CourseWare/", item.courseWareTitle) {  //文件下载时，需要指定下载的文件目录和文件名
+                                    @Override
+                                    public void onResponse(boolean isFromCache, File file, Request request, @Nullable Response response) {
+                                        // file 即为文件数据，文件保存在指定目录
+                                        dowload.dismiss();
+                                        dowload = null;
+                                        ToastUtils.showShort(context,file.getName()+"下载成功");
+                                        Message msg = new Message();
+                                        msg.obj = file.getAbsolutePath();
+                                        handler.sendMessage(msg);
+                                    }
+                                    @Override
+                                    public void downloadProgress(long currentSize, long totalSize, float progress, long networkSpeed) {
+                                        //这里回调下载进度(该回调在主线程,可以直接更新ui)
+                                        dowload.setPercent(Math.round(progress));
 
-                                }
-                            });
+                                    }
+
+                                    @Override
+                                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+                                        super.onError(isFromCache, call, response, e);
+                                        ToastUtils.showShort(context,"下载失败...");
+                                        dowload.dismiss();
+                                        dowload = null;
+                                    }
+                                });
+                    }
+
                 }
             }
         });

@@ -115,6 +115,7 @@ public class LoginActivity extends BaseActivity implements IDataCallback<Domine>
             SharedPreferencesUtils.setParam(me,"accountName",mEdtLogingUsername.getText().toString().trim());
             SharedPreferencesUtils.setParam(me,"password",mEdtLogingPwd.getText().toString().trim());
             SharedPreferencesUtils.setParam(me,"id",((Account) data).id);
+            SharedPreferencesUtils.setParam(me,"avatarUrl",((Account) data).avatarUrl);
             startActivity(MainActivity.class);
         }
         finish();

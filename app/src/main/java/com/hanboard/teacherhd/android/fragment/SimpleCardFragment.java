@@ -12,6 +12,8 @@ import com.hanboard.teacherhd.R;
 import com.hanboard.teacherhd.android.entity.LessonPlan;
 import com.hanboard.teacherhd.config.Constants;
 
+import name.quanke.app.libs.emptylayout.EmptyLayout;
+
 
 @SuppressLint("ValidFragment")
 public class SimpleCardFragment extends Fragment {
@@ -24,8 +26,10 @@ public class SimpleCardFragment extends Fragment {
     public static final  String TEACHING_G="教学过程";
     public static final  String TEACHING_H="作业布置";
     public static  final String[] COURSETITLES = {TEACHING_T,TEACHING_I,TEACHING_P,TEACHING_G,TEACHING_H };
+    private EmptyLayout emptyLayout;
     public static SimpleCardFragment getInstance(String title, LessonPlan plans) {
         SimpleCardFragment sf = new SimpleCardFragment();
+
         sf.mTitle = title;
         sf.lessonPlan=plans;
         return sf;
@@ -39,6 +43,7 @@ public class SimpleCardFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fr_simple_card, null);
+        emptyLayout= (EmptyLayout) v.findViewById(R.id.emptLayout);
         mTextView = (TextView) v.findViewById(R.id.card_title_tv);
         if (mTitle.equals(TEACHING_T))
             mTextView.setText(lessonPlan.lessonPlanGoal);
