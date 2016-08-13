@@ -26,8 +26,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:layout_marginLeft="-2dp"
-                android:layout_marginBottom="-2dp"
                 android:gravity="center"
                 android:id="@+id/dialog_cancel"
                 android:layout_weight="1"

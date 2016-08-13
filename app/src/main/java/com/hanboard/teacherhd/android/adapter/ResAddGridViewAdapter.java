@@ -51,6 +51,7 @@ public class ResAddGridViewAdapter extends BaseAdapter{
        img = (ImageView) convertView.findViewById(R.id.res_load_img);
        name_tv = (TextView) convertView.findViewById(R.id.res_load_name);
        deleteView = convertView.findViewById(R.id.delete_markView);
+        deleteView.setVisibility(isShowDelete?View.VISIBLE:View.GONE);
        if(myList.get(position).format.equals("PPT")){
            img.setImageResource(R.mipmap.log_ppt);
        }else if(myList.get(position).format.equals("WORD")){

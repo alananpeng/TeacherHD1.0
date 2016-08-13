@@ -24,10 +24,10 @@ public abstract class JsonCallback<T> extends CommonCallback<T> {
     @Override
     public T parseNetworkResponse(Response response) throws Exception {
         String responseData = response.body().string();
-        if (TextUtils.isEmpty(responseData)) return null;
+        if (TextUtils.isEmpty(responseData)) throw new IllegalStateException("服务器异常"); ;
         JSONObject jsonObject = new JSONObject(responseData);
         final String msg = jsonObject.optString("message", "");
-        final String code = jsonObject.optString("code","");
+        final String code = jsonObject.optString("code", "");
         String data = jsonObject.optString("data", "");
         switch (code) {
             case "200":
@@ -40,12 +40,6 @@ public abstract class JsonCallback<T> extends CommonCallback<T> {
             default:
                 throw new IllegalStateException("错误代码：" + code + "，错误信息：" + msg);
         }
-        OkHttpUtils.getInstance().getDelivery().post(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(OkHttpUtils.getContext(), "错误代码：" + code + "，错误信息：" + msg, Toast.LENGTH_SHORT).show();
-            }
-        });
         return null;
     }
 }

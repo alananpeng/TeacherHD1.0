@@ -45,9 +45,9 @@ public class CursorGridViewAdapter<T> extends CommonAdapter<T> {
                 else if (exercisesTypeInt==4)
                     viewHolder.setImageForView(R.id.cursor_iamge_item,R.mipmap.log_xls);
                 else if (exercisesTypeInt==5)
-                    viewHolder.setImageForView(R.id.cursor_iamge_item,R.mipmap.log_mp4);
-                else if (exercisesTypeInt==6)
                     viewHolder.setImageForView(R.id.cursor_iamge_item,R.mipmap.log_mp3);
+                else if (exercisesTypeInt==6)
+                    viewHolder.setImageForView(R.id.cursor_iamge_item,R.mipmap.log_mp4);
                 else  if (exercisesTypeInt==8)
                     viewHolder.setImageForView(R.id.cursor_iamge_item,R.mipmap.log_pdf);
                 else  viewHolder.setImageForView(R.id.cursor_iamge_item,R.mipmap.log_pdf);
@@ -63,9 +63,9 @@ public class CursorGridViewAdapter<T> extends CommonAdapter<T> {
                 else if (courseWareTypeInt==4)
                     viewHolder.setImageForView(R.id.cursor_iamge_item,R.mipmap.log_xls);
                 else if (courseWareTypeInt==5)
-                    viewHolder.setImageForView(R.id.cursor_iamge_item,R.mipmap.log_mp4);
-                else if (courseWareTypeInt==6)
                     viewHolder.setImageForView(R.id.cursor_iamge_item,R.mipmap.log_mp3);
+                else if (courseWareTypeInt==6)
+                    viewHolder.setImageForView(R.id.cursor_iamge_item,R.mipmap.log_mp4);
                 else  if (courseWareTypeInt==8)
                     viewHolder.setImageForView(R.id.cursor_iamge_item,R.mipmap.log_pdf);
                 else  viewHolder.setImageForView(R.id.cursor_iamge_item,R.mipmap.log_pdf);

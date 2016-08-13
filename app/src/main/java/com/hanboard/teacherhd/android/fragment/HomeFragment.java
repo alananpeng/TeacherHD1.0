@@ -7,22 +7,28 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.hanboard.teacherhd.R;
 import com.hanboard.teacherhd.android.activity.DialogActivity;
+import com.hanboard.teacherhd.android.entity.Banner;
+import com.hanboard.teacherhd.android.entity.Domine;
 import com.hanboard.teacherhd.android.fragment.teachingplan.TestFragment;
+import com.hanboard.teacherhd.android.model.IAppModel;
+import com.hanboard.teacherhd.android.model.impl.AppModelImpl;
 import com.hanboard.teacherhd.common.base.BaseFragment;
+import com.hanboard.teacherhd.common.callback.IDataCallback;
 import com.hanboard.teacherhd.common.view.Rotate3DCircleLayout;
+import com.hanboard.teacherhd.lib.common.utils.SharedPreferencesUtils;
 import com.hanboard.teacherhd.lib.common.utils.ToastUtils;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +36,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import it.sephiroth.android.library.picasso.Picasso;
 
 /**
  * 项目名称：TeacherHD
@@ -38,19 +45,29 @@ import butterknife.OnClick;
  * 作者单位：四川汉博德信息技术有限公司
  * 创建时间：2016/7/27 0027 12:47
  */
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements IDataCallback<List<Banner>>{
     @BindView(R.id.rotatelayout)
     Rotate3DCircleLayout rotatelayout;
+    @BindView(R.id.banner_1)
+    ImageView banner1;
+    @BindView(R.id.banner_2)
+    ImageView banner2;
+
+    @BindView(R.id.banner_3)
+    ImageView banner3;
+    private IAppModel iAppModel;
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
+        iAppModel = new AppModelImpl();
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
+
     @Override
     protected void initData() {
+        iAppModel.getBanner(this);
         rotatelayout.setOnItemClickListener(new Rotate3DCircleLayout.OnItemClickListener() {
             @Override
             public void onItemClick(int pos) {
-
             }
         });
     }
@@ -64,10 +81,9 @@ public class HomeFragment extends BaseFragment {
                 startTeachingPreparation();
                 break;
             case R.id.home_tv_startClass:
-                Intent intent=new Intent(context, DialogActivity.class);
-                startActivityForResult(intent,100);
+                Intent intent = new Intent(context, DialogActivity.class);
+                startActivityForResult(intent, 100);
         }
-
     }
 
     @Override
@@ -134,6 +150,19 @@ public class HomeFragment extends BaseFragment {
         if (isAddedStack)
             ft.addToBackStack(null);
         ft.commit();
+    }
+
+
+    @Override
+    public void onSuccess(List<Banner> data) {
+        Picasso.with(context).load(data.get(0).imageUrl).into(banner1);
+        Picasso.with(context).load(data.get(1).imageUrl).into(banner2);
+        Picasso.with(context).load(data.get(2).imageUrl).into(banner3);
+    }
+
+    @Override
+    public void onError(String msg, int code) {
+
     }
 
 }

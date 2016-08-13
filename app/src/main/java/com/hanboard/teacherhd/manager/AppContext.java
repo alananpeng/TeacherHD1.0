@@ -9,7 +9,8 @@ import com.hanboard.teacherhd.config.Constants;
 import com.hanboard.teacherhd.lib.common.http.okhttp.OkHttpUtils;
 import com.hanboard.teacherhd.lib.common.http.okhttp.log.LoggerInterceptor;
 import com.hanboard.teacherhd.lib.common.utils.NetUtil;
-import com.hanboard.teacherhd.lib.common.utils.ToastUtils;
+import com.tencent.bugly.Bugly;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
@@ -23,7 +24,6 @@ public class AppContext extends Application {
     private static boolean isLogged = false;
     private static AppContext instance;
     public static int mNetWorkState;
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -31,6 +31,8 @@ public class AppContext extends Application {
         initOkHttp();
         initData();
         com.lzy.okhttputils.OkHttpUtils.init(this);
+        /*Crash异常上报*/
+        CrashReport.initCrashReport(getApplicationContext());
     }
     /**初始化okhttp*/
    public void initOkHttp(){
@@ -48,8 +50,6 @@ public class AppContext extends Application {
 
     public void initData() {
         mNetWorkState = NetUtil.getNetworkState(this);
-
-
     }
 
 }

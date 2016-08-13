@@ -14,6 +14,7 @@ import com.hanboard.teacherhd.lib.ui.romainpiel.titanic.library.TitanicTextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import name.quanke.app.libs.emptylayout.EmptyLayout;
 
 /**
  * 项目名称：TeacherHD
@@ -23,18 +24,16 @@ import butterknife.OnClick;
  * 创建时间：2016/7/27 0027 12:56
  */
 public class ContactsFragment extends BaseFragment {
-    @BindView(R.id.my_text_view)
-    TitanicTextView myTextView;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
-        return inflater.inflate(R.layout.fragment_contacts, container, false);
-    }
+        EmptyLayout e = new EmptyLayout(context);
+        e.showError(R.mipmap.wawa_03,"此功能待开放");
 
+        return e;
+    }
     @Override
     protected void initData() {
-//      EmptyLayout f = (EmptyLayout) getRootView().findViewById(R.id.emptyLayout);
-//      f.showEmpty();
-        new Titanic().start(myTextView);
+
     }
 }

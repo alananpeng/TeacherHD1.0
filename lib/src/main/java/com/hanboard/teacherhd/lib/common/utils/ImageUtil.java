@@ -56,7 +56,6 @@ public class ImageUtil {
 	public static Bitmap getInvertBitmap(Resources res, int resID) {
 		// 1.获取原图
 		Bitmap sourceBitmap = BitmapFactory.decodeResource(res, resID);
-
 		// 2.生成倒影图片
 		Matrix m = new Matrix(); // 图片矩阵
 		m.setScale(1.0f, -1.0f); // 让图片按照矩阵进行反转

@@ -7,28 +7,38 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hanboard.teacherhd.R;
 import com.hanboard.teacherhd.android.broadCast.NetBrodeCaset;
+import com.hanboard.teacherhd.android.entity.Version;
+import com.hanboard.teacherhd.android.model.IVersionModel;
 import com.hanboard.teacherhd.android.model.InetEventHandler;
 import com.hanboard.teacherhd.android.fragment.ContactsFragment;
 import com.hanboard.teacherhd.android.fragment.CourseWareFragment;
 import com.hanboard.teacherhd.android.fragment.HomeFragment;
+import com.hanboard.teacherhd.android.model.impl.VersionModelImpl;
 import com.hanboard.teacherhd.common.base.BaseActivity;
+import com.hanboard.teacherhd.common.callback.UpdateCallback;
+import com.hanboard.teacherhd.common.tools.VersionUtils;
+import com.hanboard.teacherhd.lib.common.utils.SharedPreferencesUtils;
 import com.hanboard.teacherhd.lib.common.utils.NetUtil;
 import com.hanboard.teacherhd.lib.common.utils.SharedPreferencesUtils;
 import com.hanboard.teacherhd.lib.common.utils.ToastUtils;
+import com.tencent.bugly.crashreport.CrashReport;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import it.sephiroth.android.library.picasso.Picasso;
+import it.sephiroth.android.library.picasso.Picasso;
 import name.quanke.app.libs.emptylayout.EmptyLayout;
-
 /**
  * 项目名称：TeacherHD
  * 类描述：
@@ -36,13 +46,11 @@ import name.quanke.app.libs.emptylayout.EmptyLayout;
  * 作者单位：四川汉博德信息技术有限公司
  * 创建时间：2016/7/25 0025 15:22
  */
-public class MainActivity extends BaseActivity  implements InetEventHandler{
+public class MainActivity extends BaseActivity  implements InetEventHandler,UpdateCallback{
     @BindView(R.id.view_main_home)
     View mViewMainHome;
     @BindView(R.id.view_main_contacts)
     View mViewMainContacts;
-    @BindView(R.id.view_main_courseware)
-    View mViewMainCourseWare;
     @BindView(R.id.img_main_home)
     ImageView mImgMainHome;
     @BindView(R.id.txt_main_home)
@@ -51,44 +59,41 @@ public class MainActivity extends BaseActivity  implements InetEventHandler{
     ImageView mImgMainContacts;
     @BindView(R.id.txt_main_contacts)
     TextView mTxtMainContacts;
-    @BindView(R.id.img_main_courseware)
-    ImageView mImgMainCourseware;
-    @BindView(R.id.txt_main_courseware)
-    TextView mTxtMainCourseware;
-
+    @BindView(R.id.userImg)
+    ImageView mUserImg;
     @BindColor(R.color.theme_color)
     int mThemeColoc;
     @BindColor(R.color.white)
     int mWhiteColoc;
-    @BindView(R.id.imageView3)
-    ImageView userIcon;
     @BindView(R.id.lnl_main_contacts)
     LinearLayout lnlMainContacts;
-    @BindView(R.id.lnl_main_courseware)
-    LinearLayout lnlMainCourseware;
     @BindView(R.id.lnl_main_content)
     LinearLayout lnlMainContent;
 
     private HomeFragment mHomeFragment;
     private ContactsFragment mContactsFragment;
     private CourseWareFragment mCourseWareFragment;
-
+    private IVersionModel iVersionModel;
     @Override
     protected void initContentView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
+        /**保持屏幕常亮*/
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        iVersionModel = new VersionModelImpl();
         ButterKnife.bind(this);
         setDefaultFragment();
         initData();
+        checkUpdate();
+    }
+
+    private void checkUpdate() {
+        iVersionModel.checkVersion(this);
     }
 
     private void initData() {
-        Picasso.with(this).load((String) SharedPreferencesUtils.getParam(this, "avatarUrl", "")).into(userIcon);
-        //initBroadCast();
-        Log.i("MainActivity", "========================initData: "+NetUtil.getNetworkState(this));
+        Picasso.with(this).load((String) SharedPreferencesUtils.getParam(this, "userImg", "")).into(mUserImg);
         NetBrodeCaset.mListeners.add(this);
-
     }
-
     /*设置默认Fragment*/
     private void setDefaultFragment() {
         FragmentManager fm = getSupportFragmentManager();
@@ -99,10 +104,10 @@ public class MainActivity extends BaseActivity  implements InetEventHandler{
         mViewMainHome.setBackgroundResource(R.mipmap.left_on_black_02);
         mTxtMainHome.setTextColor(mThemeColoc);
         mImgMainHome.setBackgroundResource(R.mipmap.home_on);
+        Picasso.with(me).load((String) SharedPreferencesUtils.getParam(me,"userImg","")).into(mUserImg);
         transaction.commit();
     }
-
-    @OnClick({R.id.lnl_main_home, R.id.lnl_main_contacts, R.id.lnl_main_courseware})
+    @OnClick({R.id.lnl_main_home, R.id.lnl_main_contacts})
     void onClick(View v) {
         FragmentManager fm = getSupportFragmentManager();
         // 开启Fragment事务
@@ -131,16 +136,6 @@ public class MainActivity extends BaseActivity  implements InetEventHandler{
                 mTxtMainContacts.setTextColor(mThemeColoc);
                 mImgMainContacts.setBackgroundResource(R.mipmap.contacts_on);
                 break;
-            case R.id.lnl_main_courseware:
-                if (mCourseWareFragment == null) {
-                    mCourseWareFragment = new CourseWareFragment();
-                }
-                transaction.replace(R.id.lnl_main_content, mCourseWareFragment);
-                //变化指示器
-                mViewMainCourseWare.setBackgroundResource(R.mipmap.left_on_black_02);
-                mTxtMainCourseware.setTextColor(mThemeColoc);
-                mImgMainCourseware.setBackgroundResource(R.mipmap.courseware_on);
-                break;
 
         }
         // transaction.addToBackStack();
@@ -157,10 +152,6 @@ public class MainActivity extends BaseActivity  implements InetEventHandler{
         mViewMainContacts.setBackgroundResource(R.mipmap.left_02);
         mTxtMainContacts.setTextColor(mWhiteColoc);
         mImgMainContacts.setBackgroundResource(R.mipmap.contacts);
-        /**/
-        mViewMainCourseWare.setBackgroundResource(R.mipmap.left_02);
-        mTxtMainCourseware.setTextColor(mWhiteColoc);
-        mImgMainCourseware.setBackgroundResource(R.mipmap.courseware);
     }
 
     @Override
@@ -170,15 +161,8 @@ public class MainActivity extends BaseActivity  implements InetEventHandler{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 
 
     @Override
@@ -193,7 +177,17 @@ public class MainActivity extends BaseActivity  implements InetEventHandler{
             setContentView(emptyLayout);*/
         }else {
             ToastUtils.showShort(this,"网络已连接");
+        }
+    }
 
+    @Override
+    public void onVersion(Version version) {
+        int versionCode = VersionUtils.getVersionCode(me);
+        if(versionCode < version.versionCode){
+            Intent intent = new Intent();
+            intent.putExtra("version",version);
+            intent.setClass(this,VersionActivity.class);
+            startActivity(intent);
         }
     }
 }

@@ -15,24 +15,24 @@
         android:id="@+id/rotatelayout"
         android:layout_width="match_parent"
         android:layout_height="300dp">
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/banner_1"
             android:elevation="6dp"
             android:layout_width="300dp"
-            android:layout_height="150dp"
-            android:background="@mipmap/banner3">
-        </RelativeLayout>
-        <RelativeLayout
+            android:layout_height="150dp">
+        </ImageView>
+        <ImageView
+            android:id="@+id/banner_2"
             android:elevation="6dp"
             android:layout_width="300dp"
-            android:layout_height="150dp"
-            android:background="@mipmap/banner1">
-        </RelativeLayout>
-        <RelativeLayout
+            android:layout_height="150dp">
+        </ImageView>
+        <ImageView
+            android:id="@+id/banner_3"
             android:elevation="6dp"
             android:layout_width="300dp"
-            android:layout_height="150dp"
-            android:background="@mipmap/banner2">
-        </RelativeLayout>
+            android:layout_height="150dp">
+        </ImageView>
     </com.hanboard.teacherhd.common.view.Rotate3DCircleLayout>
     <View
         android:layout_marginTop="20dp"
@@ -100,8 +100,7 @@
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:background="@mipmap/huanse_yuan_03"
-            android:text="课件管理"/>
-
+            android:text="学生管理\n待开发"/>
         <TextView
             android:layout_margin="15dp"
             android:textSize="18dp"

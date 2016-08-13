@@ -9,12 +9,11 @@ package com.hanboard.teacherhd.config;
  */
 public class Urls {
     /**host*/
-    public static final String SERVER_HOST = "http://172.17.1.25";
+    public static final String SERVER_HOST = "http://110.186.73.233";
     /*port*/
-    public static final String SERVER_PORT = "8084";
+    public static final String SERVER_PORT = "2009/hanboardApp/";
     /**SERVER_ADDRESS*/
     public static final String SERVER_ADDRESS = SERVER_HOST+":"+SERVER_PORT+"/";
-//    public static final String SERVER_ADDRESS = "http://6d625726.ngrok.natapp.cn/";
     /** 登录接口 */
     public static final String URL_LOGIN = SERVER_ADDRESS+"api/v1/user/login";
     /**获取所有科目*/
@@ -32,7 +31,7 @@ public class Urls {
     /**通过章节id 账号id 课本id获取该章节下所有备课信息*/
     public static final String URL_GETLESSONS = SERVER_ADDRESS+"api/v1/chaptercontent/findByChapterId";
     /** App更新地址 */
-    public static final String UPDATE_URL = "";
+    public static final String UPDATE_URL = SERVER_ADDRESS+"api/v1/publicfunction/versionupdate";
     /**
      * 获取授课课本信息
      */
@@ -53,4 +52,6 @@ public class Urls {
      *通过备课信息ID获取备课信息详细信息
      */
     public static  final  String URL_GETPRECOURSEWARE=SERVER_ADDRESS+"api/v1/content/findInfoByContentId";
+    /**获取app——banner*/
+    public static final String URL_GETBANNER = SERVER_ADDRESS+"api/v1/banner/andriodPadQueryBanner";
 }

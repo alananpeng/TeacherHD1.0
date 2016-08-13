@@ -164,8 +164,8 @@ public class AddPrepareLessonsActivity extends FragmentActivity {
         WindowManager m = getWindowManager();
         Display d = m.getDefaultDisplay();
         WindowManager.LayoutParams p = getWindow().getAttributes();
-        p.height = (int) (d.getHeight() * 1);
-        p.width = (int) (d.getWidth() * 1);
+        p.height = (int) (d.getHeight() * 0.8);
+        p.width = (int) (d.getWidth() * 0.8);
         getWindow().setAttributes(p);
     }
     private void addOrShowFragment(FragmentTransaction transaction, Fragment fragment) {
@@ -198,11 +198,7 @@ public class AddPrepareLessonsActivity extends FragmentActivity {
         String xitisJson = (String) SharedPreferencesUtils.getParam(AddPrepareLessonsActivity.this,"xiti","");
         /*课件*/
         String kejiansJson = (String) SharedPreferencesUtils.getParam(AddPrepareLessonsActivity.this,"kejian","");
-
-
-
         List<LoadRes> xitis = JsonUtil.fromJson(xitisJson, new TypeToken<List<LoadRes>>() {}.getType());
-
         List<LoadRes> kejians = JsonUtil.fromJson(kejiansJson, new TypeToken<List<LoadRes>>() {}.getType());
         Map<String, String> params = null;
         List<File> xitiFiles = new ArrayList<>();
@@ -232,12 +228,13 @@ public class AddPrepareLessonsActivity extends FragmentActivity {
             params.put("teachBookId",new DESCoder(CoderConfig.CODER_CODE).encrypt(textbookId));
             params.put("contentTitle",new DESCoder(CoderConfig.CODER_CODE).encrypt(title));
             params.put("courseHour",keshi);
+//
             OkHttpUtils.post(Urls.URL_ADDLESSONSINFO)
                     .tag(this)
                     .params(params)
-                    .addFileParams("file",kejianFiles)
-                    .addFileParams("files",xitiFiles)
-                    .execute(new ProgressUpCallBack<>(this,RequestInfo.class));
+                    .addFileParams("file", kejianFiles)
+                    .addFileParams("files", xitiFiles)
+                    .execute(new ProgressUpCallBack<>(this, RequestInfo.class));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -249,14 +246,13 @@ public class AddPrepareLessonsActivity extends FragmentActivity {
         @Override
         public void onResponse(boolean isFromCache, T t, Request request, @Nullable Response response) {
             //上传完成
-            ToastUtils.showShort(AddPrepareLessonsActivity.this,response.toString());
+            ToastUtils.showShort(AddPrepareLessonsActivity.this,response.message());
             mProgress.dismiss();
             clearSharedPreferences();
             Intent intent=new Intent();
             setResult(300, intent);
             finish();
         }
-
         private void clearSharedPreferences() {
             /*教案*/
             SharedPreferencesUtils.setParam(AddPrepareLessonsActivity.this,"mubiao","");
@@ -270,8 +266,7 @@ public class AddPrepareLessonsActivity extends FragmentActivity {
             /*习题*/
             SharedPreferencesUtils.setParam(AddPrepareLessonsActivity.this,"xiti","");
             /*课件*/
-            SharedPreferencesUtils.setParam(AddPrepareLessonsActivity.this,"kejian",""
-            );
+            SharedPreferencesUtils.setParam(AddPrepareLessonsActivity.this,"kejian","");
         }
 
         @Override
@@ -284,16 +279,16 @@ public class AddPrepareLessonsActivity extends FragmentActivity {
             super.onError(isFromCache, call, response, e);
             mProgress.dismiss();
             //上传错误
-            ToastUtils.showShort(AddPrepareLessonsActivity.this,response.message());
+            ToastUtils.showShort(AddPrepareLessonsActivity.this,e.getMessage());
         }
         @Override
         public void upProgress(long currentSize, long totalSize, float progress, long networkSpeed) {
             super.upProgress(currentSize, totalSize, progress, networkSpeed);
-//            String downloadLength = Formatter.formatFileSize(AddPrepareLessonsActivity.this, currentSize);
-//            String totalLength = Formatter.formatFileSize(AddPrepareLessonsActivity.this, totalSize);
-//            String netSpeed = Formatter.formatFileSize(AddPrepareLessonsActivity.this, networkSpeed);
-//              ToastUtils.showShort(AddPrepareLessonsActivity.this,"currentSize"+currentSize+"totalSize"+totalSize+"networkSpeed"+networkSpeed);
-              mProgress.setPercent(Math.round(Math.round(progress * 10000) * 1.0f / 100));
+//          String downloadLength = Formatter.formatFileSize(AddPrepareLessonsActivity.this, currentSize);
+//          String totalLength = Formatter.formatFileSize(AddPrepareLessonsActivity.this, totalSize);
+//          String netSpeed = Formatter.formatFileSize(AddPrepareLessonsActivity.this, networkSpeed);
+//          ToastUtils.showShort(AddPrepareLessonsActivity.this,"currentSize"+currentSize+"totalSize"+totalSize+"networkSpeed"+networkSpeed);
+            mProgress.setPercent(Math.round(Math.round(progress * 10000) * 1.0f / 100));
         }
     }
 }

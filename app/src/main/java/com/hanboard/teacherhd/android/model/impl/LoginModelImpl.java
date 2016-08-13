@@ -1,6 +1,8 @@
 package com.hanboard.teacherhd.android.model.impl;
 
 import android.content.Context;
+import android.util.Log;
+
 import com.google.gson.reflect.TypeToken;
 import com.hanboard.teacherhd.R;
 import com.hanboard.teacherhd.android.entity.Account;
@@ -21,7 +23,6 @@ import com.hanboard.teacherhd.lib.common.utils.JsonUtil;
 import java.util.Map;
 
 import okhttp3.Call;
-
 /**
  * Created by Administrator on 2016/8/3.
  */
@@ -39,10 +40,10 @@ public class LoginModelImpl implements ILoginModel {
                 {
                     iDataCallback.onError(e.getMessage(),id);
                 }
-
                 @Override
                 public void onResponse(String response, int id)
                 {
+                    Log.e("TAG",response);
                     MData<Account> res = JsonUtil.fromJson(response, new TypeToken<MData<Account>>() {}.getType());
                     if(res.code.equals(Constants.CODE_SUCCESS))
                         iDataCallback.onSuccess(res.result);
@@ -53,10 +54,7 @@ public class LoginModelImpl implements ILoginModel {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
-
     @Override
     public void doTest(IDataCallback<Domine> iDataCallback) {
 

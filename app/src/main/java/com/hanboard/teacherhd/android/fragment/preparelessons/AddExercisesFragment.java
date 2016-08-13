@@ -47,7 +47,7 @@ public class AddExercisesFragment extends BaseFragment implements AdapterView.On
     public List<LoadRes> loadResList = new ArrayList<>();
     private ResAddGridViewAdapter mAdapter;
     private boolean isShowDelete=false;
-    private Boolean isExit=false;
+    private Boolean isExit = false;
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
         return inflater.inflate(R.layout.fragment_add_lessons_exercises, container, false);
@@ -61,6 +61,7 @@ public class AddExercisesFragment extends BaseFragment implements AdapterView.On
     }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
     @OnClick({R.id.add_lessons_exercises_save,R.id.add_lessons_exercises_img})
     void onClick(View view){
@@ -87,7 +88,6 @@ public class AddExercisesFragment extends BaseFragment implements AdapterView.On
             if (data.getBooleanExtra(FilePickerActivity.EXTRA_ALLOW_MULTIPLE, false)) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     ClipData clip = data.getClipData();
-
                     if (clip != null) {
                         for (int i = 0; i < clip.getItemCount(); i++) {
                             Uri uri = clip.getItemAt(i).getUri();
@@ -145,7 +145,6 @@ public class AddExercisesFragment extends BaseFragment implements AdapterView.On
                         }
                     }
                 }
-
             } else {
                 Uri uri = data.getData();
             }
@@ -177,7 +176,6 @@ public class AddExercisesFragment extends BaseFragment implements AdapterView.On
         }
         return data;
     }
-
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         if (isShowDelete) {
@@ -189,7 +187,6 @@ public class AddExercisesFragment extends BaseFragment implements AdapterView.On
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
                     delete(position);
-                    Log.i("------>", "进来了么");
                     mAdapter = new ResAddGridViewAdapter(context,loadResList);
                     addLessonsExercisesGridview.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
@@ -197,10 +194,8 @@ public class AddExercisesFragment extends BaseFragment implements AdapterView.On
             });
         }
         mAdapter.setIsShowDelete(isShowDelete);
-
         return true;
     }
-
     private void delete(int position) {
         List<LoadRes> newList = new ArrayList<>();
         if(isShowDelete){

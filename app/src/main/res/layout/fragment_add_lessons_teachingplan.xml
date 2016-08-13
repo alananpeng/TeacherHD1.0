@@ -18,7 +18,8 @@
             android:hint="请输入备课标题"
             android:textColorHint="@color/white"
             android:textSize="18sp"
-            android:background="@mipmap/add_lessons_edit_05"/>
+            android:padding="15dp"
+            android:background="@drawable/edittext_bottom_border"/>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -44,10 +45,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:gravity="left|top"
-                    android:hint="1.能结合具体情境，进一步理解加法，减法，乘法和除法的意义。
-2.学会独立思考，感受线段图的直观作用，体会假设，转化等数学思想方法。
-3.获得分析和解决和差问题的一般方法，体会解决问题方法的多样性，发展创新意识。
-4.初步养成乐于思考，勇于质疑，言必有据的良好品质。"
+                    android:textSize="15sp"
+                    android:hint="请填写您的教学目标：\n教学目标可以分为三个层次：一是课程目标；二是课堂教学目标；三是教育成才目标..."
                     android:minLines="4"/>
                 <TextView
                     android:textSize="20dp"
@@ -60,6 +59,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:gravity="left|top"
+                    android:textSize="15sp"
+                    android:hint="请填写您的教学重点：\n教学重点是依据教学目标，在对教材进行科学分析的基础上而确定的最基本、最核心的教学内容，一般是一门学科所阐述的最重要的原理、规律，是学科思想或学科特色的集中体现..."
                     android:minLines="4"/>
                 <TextView
                     android:textSize="20dp"
@@ -72,6 +73,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:gravity="left|top"
+                    android:textSize="15sp"
+                    android:hint="请填写您的教学准备：\n主要有：准备教学目标、准备学生情况、准备教学材料、准备教学心理、准备教学过程、准备教学评价..."
                     android:minLines="4"/>
                 <TextView
                     android:textSize="20dp"
@@ -84,12 +87,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:gravity="left|top"
-                    android:hint="（一）复习与准备
-1.教师：（出示下图）下面的线段图表示的是什么意思？大家说一说
-2.画线段图表示“男生比女生多3人”
-（1）学生独立画图，一个学生板演，集体订正。
-（2）师：这幅图还可以表示什么意思：请大家说一说。
-（二）教学例题"
+                    android:textSize="15sp"
+                    android:hint="请填写您的教学过程：\n教学活动的展开过程，是教师根据一定的社会要求和学生身心发展的特点，借助一定的教学条件，指导学生主要通过认识教学内容从而认识客观世界，并在此基础之上发展自身的过程..."
                     android:minLines="4"/>
                 <TextView
                     android:textSize="20dp"
@@ -102,6 +101,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:gravity="left|top"
+                    android:textSize="15sp"
+                    android:hint="请填写您的作业布置..."
                     android:minLines="4"/>
             </LinearLayout>
         </ScrollView>

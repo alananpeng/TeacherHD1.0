@@ -19,8 +19,8 @@
             android:layout_marginRight="4dip" >
             <ImageView
                 android:id="@+id/res_load_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
                 android:src="@mipmap/log_mp3"/>
             <TextView
                 android:id="@+id/res_load_name"

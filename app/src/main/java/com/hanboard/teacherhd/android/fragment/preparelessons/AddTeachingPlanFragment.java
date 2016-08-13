@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.hanboard.teacherhd.R;
 import com.hanboard.teacherhd.common.base.BaseFragment;
@@ -61,14 +62,8 @@ public class AddTeachingPlanFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        addLessonsTeachingplanMubiao.setText("这是教学目标");
-        addLessonsTeachingplanZhongdian.setText("这是教学重点");
-        addLessonsTeachingplanZhunbei.setText("这是教学准备");
-        addLessonsTeachingplanGuocheng.setText("这是教学过程");
-        addLessonsTeachingplanZuoyebuzhi.setText("这是作业布置");
+
     }
-
-
     @OnClick({R.id.add_lessons_select_kexin, R.id.add_lessons_enterkeshi, R.id.add_lessons_teachingplan_save})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -88,7 +83,14 @@ public class AddTeachingPlanFragment extends BaseFragment {
                 kexing = mAddLessonsSelectKexin.getText().toString();
                 keshi = mAddLessonsEnterkeshi.getText().toString();
                 title = addLessonsTitle.getText().toString();
-                saveData();
+                if(title.equals("")||title.equals(null)){
+                    Toast.makeText(context,"备课标题不能为空",Toast.LENGTH_SHORT).show();
+                    addLessonsTitle.setFocusable(true);
+                    addLessonsTitle.setFocusableInTouchMode(true);
+                    addLessonsTitle.requestFocus();
+                }else{
+                    saveData();
+                }
                 break;
         }
     }
@@ -120,7 +122,6 @@ public class AddTeachingPlanFragment extends BaseFragment {
         SharedPreferencesUtils.setParam(context, "title", title);
         ToastUtils.showShort(context, "教案临时保存成功");
     }
-
     /*选择课型*/
     private void selectKexin() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);

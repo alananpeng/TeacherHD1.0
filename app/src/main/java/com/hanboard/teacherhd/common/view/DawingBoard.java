@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Environment;
 import android.view.MotionEvent;
@@ -23,15 +22,14 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * 项目名称：TeacherHD
- * 类描述：电子白板View
+ * 项目名称：DawingBoard
+ * 类描述：
  * 创建人：kun.ren@hanboard.com
  * 作者单位：四川汉博德信息技术有限公司
- * 创建时间：2016/7/29
+ * 创建时间：2016/7/26
  **/
 public class DawingBoard extends View {
     private Context context;
-
     public static final int SHAPE_CURVE = 1;
     public static final int SHAPE_LINE = 2;
     public static final int SHAPE_SQUARE = 3;
@@ -46,16 +44,12 @@ public class DawingBoard extends View {
     //画布的画笔
     private Paint mBitmapPaint;
     //临时点坐标
-
-
     private float startX;
     private float startY;
     private float stopX;
     private float stopY;
-
     private boolean isPaint = false;
     //private boolean isClear = false;
-
     //保存Path路径的集合，用List
     private static List savePath;
     //保存已删除Path路径的集合
@@ -71,18 +65,18 @@ public class DawingBoard extends View {
 
     public DawingBoard(Context context, int h, int w) {
         super(context);
-        this.context = context;
-        screenHeight = h + 100;
-        screenWidth = w + 300;
-        paintColor = new int[]{
-                Color.RED, Color.WHITE, Color.BLACK, Color.BLUE, Color.GREEN, Color.YELLOW, Color.GRAY, Color.CYAN, Color.MAGENTA
-        };
+            this.context = context;
+            screenHeight = h + 100;
+            screenWidth = w + 300;
+            paintColor = new int[]{
+                    Color.RED, Color.WHITE, Color.BLACK, Color.BLUE, Color.GREEN,
+                    Color.YELLOW, Color.GRAY, Color.CYAN, Color.MAGENTA};
 
-        //设置默认样式，去除黑色方框以及clear模式
-        setLayerType(LAYER_TYPE_SOFTWARE, null);
-        initCanvas();
-        savePath = new ArrayList();
-        deletePath = new ArrayList();
+            //设置默认样式，去除黑色方框以及clear模式
+            setLayerType(LAYER_TYPE_SOFTWARE, null);
+            initCanvas();
+            savePath = new ArrayList();
+            deletePath = new ArrayList();
     }
 
     public void saveToSDCard() {
@@ -105,8 +99,7 @@ public class DawingBoard extends View {
         File sdDir = null;
         //判断sd卡是否存在
         boolean sdCardExist = Environment.getExternalStorageState()
-                .equals(android.os.Environment.MEDIA_MOUNTED);
-
+                .equals(Environment.MEDIA_MOUNTED);
 
         //如果SD卡存在，则获取跟目录
         if   (sdCardExist) {
@@ -146,12 +139,12 @@ public class DawingBoard extends View {
         if (currentStyle == 1){
             mPaint.setStrokeWidth(currentSize);
             mPaint.setColor(currentColor);
-            //橡皮擦
+        //橡皮擦
         }else {
             mPaint.setAlpha(0);
             mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
             mPaint.setColor(Color.TRANSPARENT);
-            mPaint.setStrokeWidth(50);
+            mPaint.setStrokeWidth(80);
         }
 
     }
@@ -167,12 +160,11 @@ public class DawingBoard extends View {
     }
 
     private void touch_start(float x,  float y){
-        startX = x;
-        startY = y;
-        stopX = x;
-        stopY = y;
-        mPath.moveTo(startX, startY);
-
+            startX = x;
+            startY = y;
+            stopX = x;
+            stopY = y;
+            mPath.moveTo(startX, startY);
     }
 
     private void touch_move(float x, float y){
@@ -204,7 +196,7 @@ public class DawingBoard extends View {
                 case SHAPE_SQUARE:
                     stopX = x;
                     stopY = y;
-                    Rect rect = new Rect( Math.min((int)startX,(int) stopX),Math.min((int) startY, (int) stopY),Math.max((int) startX,(int) stopX),Math.max((int) startY,(int)stopY));
+                    RectF rect = new RectF(Math.min( startX, stopX),Math.min(startY, stopY),Math.max(startX, stopX),Math.max(startY, stopY));
                     mCanvas.drawRect(rect, mPaint);
                     break;
                 case SHAPE_OVAL:
@@ -219,6 +211,7 @@ public class DawingBoard extends View {
 
     private void touch_up(float x, float y){
         switch (mShape){
+
             case SHAPE_LINE:
                 stopX = x;
                 stopY = y;
@@ -235,8 +228,8 @@ public class DawingBoard extends View {
             case SHAPE_SQUARE:
                 stopX = x;
                 stopY = y;
-                RectF rect = new RectF(Math.min((int)startX,(int) stopX),Math.min((int) startY, (int) stopY),Math.max((int) startX,(int) stopX),Math.max((int) startY,(int)stopY));
-                mPath.addRect(rect, Path.Direction.CCW);
+                RectF rect = new RectF(Math.min((int) startX, (int)stopX),Math.min((int)startY, (int)stopY),Math.max((int)startX, (int)stopX),Math.max((int)startY, (int)stopY));
+                mPath.addRect(rect, Path.Direction.CW);
                 mCanvas.drawRect(rect, mPaint);
                 break;
             case SHAPE_OVAL:
@@ -282,6 +275,8 @@ public class DawingBoard extends View {
 
     private void redrawOnBitmap() {
         //重新设置画布
+        //mBitmap = Bitmap.createBitmap(screenWidth, screenHeight, Bitmap.Config.RGB_565);
+        //mCanvas.setBitmap(mBitmap);
         initCanvas();
         Iterator iter = savePath.iterator();
         while (iter.hasNext()){
@@ -312,6 +307,8 @@ public class DawingBoard extends View {
     public boolean onTouchEvent(MotionEvent event){
         float x = event.getX();
         float y = event.getY();
+        //isPaint = true;
+        //isClear = false;
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 //每次down就new一个path
@@ -335,6 +332,8 @@ public class DawingBoard extends View {
         return true;
     }
 
+
+
     //修改画笔样式
     public void selectPaintStyle(int which){
         if (which == 0){
@@ -354,6 +353,7 @@ public class DawingBoard extends View {
         currentSize = which;
         setPaintStyle();
     }
+
 
     //设置画笔颜色
     public void selectPaintColor(int which){

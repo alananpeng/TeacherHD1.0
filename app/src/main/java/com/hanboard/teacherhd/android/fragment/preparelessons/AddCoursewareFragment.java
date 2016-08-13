@@ -207,4 +207,6 @@ public class AddCoursewareFragment extends BaseFragment implements AdapterView.O
         loadResList.clear();
         loadResList.addAll(newList);
     }
+
+
 }

@@ -3,6 +3,7 @@ package com.hanboard.teacherhd.android.fragment;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,6 @@ import com.hanboard.teacherhd.android.entity.LessonPlan;
 import com.hanboard.teacherhd.config.Constants;
 
 import name.quanke.app.libs.emptylayout.EmptyLayout;
-
-
 @SuppressLint("ValidFragment")
 public class SimpleCardFragment extends Fragment {
     private String mTitle;
@@ -39,22 +38,20 @@ public class SimpleCardFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fr_simple_card, null);
-        emptyLayout= (EmptyLayout) v.findViewById(R.id.emptLayout);
         mTextView = (TextView) v.findViewById(R.id.card_title_tv);
         if (mTitle.equals(TEACHING_T))
-            mTextView.setText(lessonPlan.lessonPlanGoal);
+            mTextView.setText(Html.fromHtml(lessonPlan.lessonPlanGoal));
         else if (mTitle.equals(TEACHING_I))
-            mTextView.setText(lessonPlan.lessonPlanKeyPoint);
+            mTextView.setText(Html.fromHtml(lessonPlan.lessonPlanKeyPoint));
         else if (mTitle.equals(TEACHING_P))
-            mTextView.setText(lessonPlan.lessonPlanPrepare);
+            mTextView.setText(Html.fromHtml(lessonPlan.lessonPlanPrepare));
         else if (mTitle.equals(TEACHING_G))
-            mTextView.setText(lessonPlan.lessonPlanProcess);
+            mTextView.setText(Html.fromHtml(lessonPlan.lessonPlanProcess));
         else if (mTitle.equals(TEACHING_H))
-            mTextView.setText(lessonPlan.lessonPlanWord);
+            mTextView.setText(Html.fromHtml(lessonPlan.lessonPlanWord));
         return v;
     }
 

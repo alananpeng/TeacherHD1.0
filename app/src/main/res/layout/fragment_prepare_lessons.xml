@@ -65,22 +65,9 @@
         android:layout_height="match_parent"
         android:layout_below="@id/prepare_lessons_heard"
         android:orientation="vertical">
-
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <!--<com.wang.avi.AVLoadingIndicatorView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/avloadingIndicatorView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                app:indicator="BallPulse"
-                app:indicator_color="@color/theme_color"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center" />-->
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -95,6 +82,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:elevation="4dp"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:layout_marginTop="10dp"
@@ -113,7 +101,7 @@
                             android:id="@+id/fragment_prepare_lv_chapterList"
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
-                            android:divider="#00000000"></ListView>
+                            android:divider="@mipmap/hr"></ListView>
                     </RelativeLayout>
                 </LinearLayout>
 

@@ -2,6 +2,8 @@ package com.hanboard.teacherhd.android.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.Editable;
@@ -14,6 +16,7 @@ import com.hanboard.teacherhd.R;
 import com.hanboard.teacherhd.android.entity.Account;
 import com.hanboard.teacherhd.android.entity.Content;
 import com.hanboard.teacherhd.android.entity.Domine;
+import com.hanboard.teacherhd.android.entity.Version;
 import com.hanboard.teacherhd.android.model.ILoginModel;
 import com.hanboard.teacherhd.android.model.impl.LoginModelImpl;
 import com.hanboard.teacherhd.common.base.BaseActivity;
@@ -21,6 +24,8 @@ import com.hanboard.teacherhd.common.callback.IDataCallback;
 import com.hanboard.teacherhd.common.view.ClearEditText;
 import com.hanboard.teacherhd.lib.common.utils.SharedPreferencesUtils;
 import com.hanboard.teacherhd.lib.common.utils.ToastUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,8 +36,6 @@ public class LoginActivity extends BaseActivity implements IDataCallback<Domine>
     ClearEditText mEdtLogingUsername;
     @BindView(R.id.edt_loging_pwd)
     EditText mEdtLogingPwd;
-    @BindView(R.id.img_login_header)
-    ImageView mImgLoginHeader;
     private static final String TAG = "LoginActivity";
     private ILoginModel loginModel;
     private SharedPreferences sharedPreferences;
@@ -42,9 +45,7 @@ public class LoginActivity extends BaseActivity implements IDataCallback<Domine>
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         initEditText();
-        changeLoginAnim();
     }
-
     /**
      * 从SharePreference里面获取用户信息
      */
@@ -58,28 +59,6 @@ public class LoginActivity extends BaseActivity implements IDataCallback<Domine>
         }
     }
 
-    /**改变眼睛*/
-    private void changeLoginAnim() {
-        mEdtLogingPwd.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.length()<1)
-                    mImgLoginHeader.setImageResource(R.mipmap.login_zhengyan_03);
-                else
-                    mImgLoginHeader.setImageResource(R.mipmap.login_biyan_03);
-
-            }
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-    }
 
     @Override
     protected void handler(Message msg) {
@@ -115,7 +94,7 @@ public class LoginActivity extends BaseActivity implements IDataCallback<Domine>
             SharedPreferencesUtils.setParam(me,"accountName",mEdtLogingUsername.getText().toString().trim());
             SharedPreferencesUtils.setParam(me,"password",mEdtLogingPwd.getText().toString().trim());
             SharedPreferencesUtils.setParam(me,"id",((Account) data).id);
-            SharedPreferencesUtils.setParam(me,"avatarUrl",((Account) data).avatarUrl);
+            SharedPreferencesUtils.setParam(me,"userImg",((Account) data).avatarUrl);
             startActivity(MainActivity.class);
         }
         finish();

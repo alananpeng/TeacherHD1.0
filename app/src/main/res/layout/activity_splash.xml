@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.hanboard.teacherhd.android.activity.SplashActivity">
+
+    <ImageView
+        android:scaleType="fitXY"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/splash_iv"
+        android:src="@mipmap/splash"/>
+    <TextView
+        android:gravity="center"
+        android:text="四川汉博德信息技术有限公司TeacherHD v1.0.0"
+        android:textColor="@color/white"
+        android:layout_marginBottom="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_margin="8dp"
+        android:padding="10dp"
+        android:background="#50000000"
+        android:textColor="#cccccc"
+        android:visibility="invisible"
+        android:layout_alignParentRight="true"
+        android:id="@+id/counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

@@ -1,14 +1,15 @@
 package com.hanboard.teacherhd.android.fragment;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
+import android.widget.Toast;
 import com.hanboard.teacherhd.R;
 import com.hanboard.teacherhd.android.activity.SelectTextBookActivity;
 import com.hanboard.teacherhd.android.adapter.TextBookAllChapterAdapter;
@@ -25,11 +26,13 @@ import com.hanboard.teacherhd.common.callback.IDataCallback;
 import com.hanboard.teacherhd.common.view.LoadingDialog;
 import com.hanboard.teacherhd.lib.common.utils.SharedPreferencesUtils;
 import com.hanboard.teacherhd.lib.common.utils.ToastUtils;
-
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -48,6 +51,9 @@ public class TeachingPreparationFragment extends BaseFragment implements IDataCa
     private TextBookAllChapterAdapter<Chapter> mAdapter;
     private List<Chapter> listChapter = new ArrayList<>();
     private LoadingDialog loading;
+    private Timer timer;
+    private  int recLen=Integer.MAX_VALUE;
+
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
         iSelectTextBookModel = new SelectTextBookModelImpl();
@@ -90,7 +96,8 @@ public class TeachingPreparationFragment extends BaseFragment implements IDataCa
     }
     @Override
     public void onError(String msg, int code) {
-
+        loading.dismiss();
+        Toast.makeText(context,msg,Toast.LENGTH_SHORT).show();
     }
     @Override
     public void onClick(Node node, int position) {
@@ -107,4 +114,8 @@ public class TeachingPreparationFragment extends BaseFragment implements IDataCa
             EventBus.getDefault().post(getLessons);
         }
     }
+
+
+
 }
+
