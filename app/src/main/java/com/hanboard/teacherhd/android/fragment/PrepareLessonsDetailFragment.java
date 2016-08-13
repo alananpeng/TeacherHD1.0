@@ -47,18 +47,33 @@ public class PrepareLessonsDetailFragment extends BaseFragment implements IDataC
     @BindView(R.id.gd_prepare_lessons)
     GridView mGdPrepareLessons;
     private Elements<PrepareChapter> mElements;
+    private List<PrepareChapter> chapters=new ArrayList<PrepareChapter>();
     private IPrepareLessonsModel iPrepareLessonsModel;
     public static  String CONTENTID="contentId";
     private PrepareLessonsDetailGirdViewAdapter mAdapter;
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
         iPrepareLessonsModel = new PrepareLessonsModelImpl();
+
         return inflater.inflate(R.layout.fragment_prepare_lessons_detail, container, false);
     }
     @Override
     protected void initData() {
         EventBus.getDefault().register(this);
-    }
+        mAdapter = new PrepareLessonsDetailGirdViewAdapter(context, R.layout.new_lessons_item, chapters);
+        mGdPrepareLessons.setAdapter(mAdapter);
+            mGdPrepareLessons.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Intent intent = new Intent(context, ClassActivity.class);
+                    String contentId = mElements.elements.get(i).getContentId();
+                    intent.putExtra(CONTENTID,contentId);
+                    startActivity(intent);
+                }
+            });
+        }
+
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void doResultInt(BookAndChapterId ids) {
         Log.i("=========", "doResultInt: "+ids.getTextBookId()+"========="+ids.getChapterId());
@@ -68,15 +83,7 @@ public class PrepareLessonsDetailFragment extends BaseFragment implements IDataC
         showProgress("正在加载中....");
         Log.i("PrepareLessonsDetail", "initDatas: "+(String)SharedPreferencesUtils.getParam(context,"id","null")+"==="+id.getChapterId()+"==="+id.getTextBookId());
         iPrepareLessonsModel.getChapterDetials((String)SharedPreferencesUtils.getParam(context,"id","null"),id.getChapterId(),id.getTextBookId(),"1",this);
-        mGdPrepareLessons.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(context, ClassActivity.class);
-                String contentId = mElements.elements.get(i).getContentId();
-                intent.putExtra(CONTENTID,contentId);
-                startActivity(intent);
-            }
-        });
+
     }
     @Override
     public void onDestroy() {
@@ -87,17 +94,19 @@ public class PrepareLessonsDetailFragment extends BaseFragment implements IDataC
     public void onSuccess(Domine data) {
          disProgress();
         if (data instanceof Elements) {
-            mAdapter=null;
             mElements=null;
+            chapters.clear();
             mElements = (Elements<PrepareChapter>) data;
+            chapters.addAll(mElements.elements);
             Log.i("=========", "doResultInt: ==下载成功了"+Thread.currentThread().getName());
-            mAdapter = new PrepareLessonsDetailGirdViewAdapter(context, R.layout.new_lessons_item, mElements.elements);
-            mGdPrepareLessons.setAdapter(mAdapter);
             mAdapter.notifyDataSetChanged();
         }
     }
     @Override
     public void onError(String msg, int code) {
         disProgress();
+        mElements=null;
+        chapters.clear();
+        mAdapter.notifyDataSetChanged();
     }
 }

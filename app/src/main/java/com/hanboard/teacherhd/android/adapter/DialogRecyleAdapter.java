@@ -44,7 +44,7 @@ public class DialogRecyleAdapter extends RecyclerView.Adapter<DialogRecyleAdapte
                 @Override
                 public void onClick(View view) {
                     Message message=new Message();
-                    message.obj = prepareSelectCourses.get(position).getTeachBookId();
+                    message.obj = prepareSelectCourses.get(position);
                     handler.sendMessage(message);
                 }
             });

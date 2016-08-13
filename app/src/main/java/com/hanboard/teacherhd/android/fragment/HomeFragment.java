@@ -78,6 +78,7 @@ public class HomeFragment extends BaseFragment {
             TestFragment testFragment = new TestFragment();
             Bundle  bundle=new Bundle();
             bundle.putString(DialogActivity.TEXTBOOK_ID,data.getStringExtra(DialogActivity.TEXTBOOK_ID));
+            bundle.putString(DialogActivity.TEXTBOOK_TITLE,data.getStringExtra(DialogActivity.TEXTBOOK_TITLE));
             testFragment.setArguments(bundle);
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.setCustomAnimations(R.anim.zoomin, R.anim.zoomout);

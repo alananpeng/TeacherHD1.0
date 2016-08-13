@@ -33,16 +33,18 @@ import butterknife.ButterKnife;
 
 public class DialogActivity extends Activity {
     public static final String TEXTBOOK_ID = "vid";
+    public static final String TEXTBOOK_TITLE = "title";
+    private PrepareSelectCourse mCourse;
     @BindView(R.id.ActivityDialog_ryc_head)
     RecyclerView ActivityDialogRycHead;
-    private String mBookId = null;
     private List<String> mTitles=new ArrayList<>();
     Handler handler=new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message message) {
-            mBookId= (String) message.obj;
+            mCourse= (PrepareSelectCourse) message.obj;
             Intent intent=new Intent();
-            intent.putExtra(TEXTBOOK_ID,mBookId);
+            intent.putExtra(TEXTBOOK_ID,mCourse.getTeachBookId());
+            intent.putExtra(TEXTBOOK_TITLE,mCourse.getSubjectName());
             setResult(200,intent);
             finish();
             return false;
@@ -62,8 +64,6 @@ public class DialogActivity extends Activity {
         setContentView(R.layout.activity_dialog);
         ButterKnife.bind(this);
         initView();
-
-
     }
 
     private void initView() {
@@ -75,7 +75,6 @@ public class DialogActivity extends Activity {
         /*params.alpha = 1.0f;
         params.dimAmount = 0.0f;*/
         getWindow().setAttributes(params);
-
         initData();
 
 

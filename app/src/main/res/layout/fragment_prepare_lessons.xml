@@ -3,64 +3,69 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/theme_color_bg">
+
     <RelativeLayout
         android:id="@+id/prepare_lessons_heard"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:elevation="4dp"
-        android:background="@color/black">
-        <!--<ImageView-->
-            <!--android:onClick="back"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/imageView"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:layout_alignParentStart="true"-->
-            <!--android:layout_marginLeft="20dp"-->
-            <!--android:src="@mipmap/back"/>-->
+        android:background="@color/black"
+        android:elevation="4dp">
+
         <TextView
+            android:id="@+id/fragment_prepare_tv_bookTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="物理"
-            android:textSize="20dp"
-            android:id="@+id/textView2"
-            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:text="科目"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
+
         <com.hanboard.teacherhd.common.view.ClearEditText
-           android:visibility="gone"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:id="@+id/edt_loging_username"
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:hint="@string/search_content"
-            android:textColorHint="#cccccc"
-            android:imeOptions="actionSearch"
-            android:textSize="16sp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="56dp"
-            android:layout_width="340dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/search_edt_bg"
-            android:layout_height="wrap_content"
             android:drawableLeft="@mipmap/usericon_03"
 
-            android:id="@+id/edt_loging_username"/>
+            android:hint="@string/search_content"
+            android:imeOptions="actionSearch"
+            android:textColorHint="#cccccc"
+            android:textSize="16sp"
+            android:visibility="invisible" />
+
         <ImageView
             android:id="@+id/fragment_prepare_search"
             android:layout_width="48dp"
             android:layout_height="wrap_content"
-            android:src="@mipmap/search"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true" />
+            android:src="@mipmap/search" />
+
+        <ImageView
+            android:visibility="invisible"
+            android:id="@+id/fragment_prepare_line"
+            android:layout_width="280dp"
+            android:layout_height="1dp"
+            android:layout_alignEnd="@+id/edt_loging_username"
+            android:layout_below="@+id/fragment_prepare_tv_bookTitle"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="4dp"
+            android:background="#7bdeda" />
     </RelativeLayout>
 
     <name.quanke.app.libs.emptylayout.EmptyLayout
 
-        android:layout_below="@id/prepare_lessons_heard"
         android:id="@+id/prepare_lessons_emptyLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:layout_below="@id/prepare_lessons_heard"
+        android:orientation="vertical">
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -76,65 +81,70 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center" />-->
 
-             <LinearLayout
-                 android:orientation="horizontal"
-                 android:layout_width="match_parent"
-                 android:layout_height="match_parent">
-                 <LinearLayout
-                     android:orientation="vertical"
-                     android:id="@+id/preppare_frag_left"
-                     android:layout_weight="2"
-                     android:layout_width="0dp"
-                     android:background="@color/black_a10_color"
-                     android:layout_height="match_parent">
-                     <TextView
-                         android:layout_marginTop="10dp"
-                         android:layout_width="match_parent"
-                         android:layout_height="48dp"
-                         android:textColor="@color/white"
-                         android:text="已选教材"
-                         android:textSize="18sp"
-                         android:gravity="center"
-                         android:background="@drawable/new_lessons_right_top_radius"/>
-                     <RelativeLayout
-                         android:background="#f2f2f2"
-                         android:layout_width="match_parent"
-                         android:layout_height="match_parent">
-                         <ListView
-                             android:id="@+id/fragment_prepare_lv_chapterList"
-                             android:divider="#00000000"
-                             android:layout_width="fill_parent"
-                             android:layout_height="fill_parent">
-                         </ListView>
-                     </RelativeLayout>
-                 </LinearLayout>
-                 <LinearLayout
-                     android:background="@color/black_a10_color"
-                     android:orientation="vertical"
-                     android:id="@+id/preppare_frag_right"
-                     android:layout_weight="5"
-                     android:layout_width="0dp"
-                     android:layout_height="match_parent">
-                   <fragment
-                       android:layout_marginLeft="10dp"
-                       android:name="com.hanboard.teacherhd.android.fragment.PrepareLessonsDetailFragment"
-                       android:id="@+id/prepare_rightfrag"
-                       android:layout_width="match_parent"
-                       android:layout_height="match_parent"></fragment>
-                 </LinearLayout>
-             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/preppare_frag_left"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="@color/black_a10_color"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/new_lessons_right_top_radius"
+                        android:gravity="center"
+                        android:text="已选教材"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#f2f2f2">
+
+                        <ListView
+                            android:id="@+id/fragment_prepare_lv_chapterList"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:divider="#00000000"></ListView>
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/preppare_frag_right"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:background="@color/black_a10_color"
+                    android:orientation="vertical">
+
+                    <fragment
+                        android:id="@+id/prepare_rightfrag"
+                        android:name="com.hanboard.teacherhd.android.fragment.PrepareLessonsDetailFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"></fragment>
+                </LinearLayout>
+            </LinearLayout>
 
         </FrameLayout>
     </name.quanke.app.libs.emptylayout.EmptyLayout>
-    <ListView
-        android:visibility="gone"
-        android:background="@color/white"
-        android:id="@+id/prepare_lessons_seachlist"
-        android:layout_marginRight="8dp"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/prepare_lessons_heard"
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"></ListView>
 
+    <ListView
+        android:id="@+id/prepare_lessons_seachlist"
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="68dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/diglog_bg"
+        android:visibility="gone"></ListView>
 
 </RelativeLayout>
