@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -15,30 +14,25 @@ import android.widget.TextView;
 import com.hanboard.teacherhd.R;
 import com.hanboard.teacherhd.android.broadCast.NetBrodeCaset;
 import com.hanboard.teacherhd.android.entity.Version;
-import com.hanboard.teacherhd.android.model.IVersionModel;
-import com.hanboard.teacherhd.android.model.InetEventHandler;
 import com.hanboard.teacherhd.android.fragment.ContactsFragment;
 import com.hanboard.teacherhd.android.fragment.CourseWareFragment;
 import com.hanboard.teacherhd.android.fragment.HomeFragment;
+import com.hanboard.teacherhd.android.model.IVersionModel;
+import com.hanboard.teacherhd.android.model.InetEventHandler;
 import com.hanboard.teacherhd.android.model.impl.VersionModelImpl;
 import com.hanboard.teacherhd.common.base.BaseActivity;
 import com.hanboard.teacherhd.common.callback.UpdateCallback;
 import com.hanboard.teacherhd.common.tools.VersionUtils;
-import com.hanboard.teacherhd.lib.common.utils.SharedPreferencesUtils;
 import com.hanboard.teacherhd.lib.common.utils.NetUtil;
 import com.hanboard.teacherhd.lib.common.utils.SharedPreferencesUtils;
 import com.hanboard.teacherhd.lib.common.utils.ToastUtils;
-import com.tencent.bugly.crashreport.CrashReport;
-
-import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import it.sephiroth.android.library.picasso.Picasso;
-import it.sephiroth.android.library.picasso.Picasso;
-import name.quanke.app.libs.emptylayout.EmptyLayout;
+
 /**
  * 项目名称：TeacherHD
  * 类描述：
@@ -46,7 +40,7 @@ import name.quanke.app.libs.emptylayout.EmptyLayout;
  * 作者单位：四川汉博德信息技术有限公司
  * 创建时间：2016/7/25 0025 15:22
  */
-public class MainActivity extends BaseActivity  implements InetEventHandler,UpdateCallback{
+public class MainActivity extends BaseActivity implements InetEventHandler, UpdateCallback {
     @BindView(R.id.view_main_home)
     View mViewMainHome;
     @BindView(R.id.view_main_contacts)
@@ -69,11 +63,11 @@ public class MainActivity extends BaseActivity  implements InetEventHandler,Upda
     LinearLayout lnlMainContacts;
     @BindView(R.id.lnl_main_content)
     LinearLayout lnlMainContent;
-
     private HomeFragment mHomeFragment;
     private ContactsFragment mContactsFragment;
     private CourseWareFragment mCourseWareFragment;
     private IVersionModel iVersionModel;
+
     @Override
     protected void initContentView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
@@ -93,7 +87,14 @@ public class MainActivity extends BaseActivity  implements InetEventHandler,Upda
     private void initData() {
         Picasso.with(this).load((String) SharedPreferencesUtils.getParam(this, "userImg", "")).into(mUserImg);
         NetBrodeCaset.mListeners.add(this);
+        mUserImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(MineActivity.class);
+            }
+        });
     }
+
     /*设置默认Fragment*/
     private void setDefaultFragment() {
         FragmentManager fm = getSupportFragmentManager();
@@ -104,9 +105,10 @@ public class MainActivity extends BaseActivity  implements InetEventHandler,Upda
         mViewMainHome.setBackgroundResource(R.mipmap.left_on_black_02);
         mTxtMainHome.setTextColor(mThemeColoc);
         mImgMainHome.setBackgroundResource(R.mipmap.home_on);
-        Picasso.with(me).load((String) SharedPreferencesUtils.getParam(me,"userImg","")).into(mUserImg);
+        Picasso.with(me).load((String) SharedPreferencesUtils.getParam(me, "userImg", "")).into(mUserImg);
         transaction.commit();
     }
+
     @OnClick({R.id.lnl_main_home, R.id.lnl_main_contacts})
     void onClick(View v) {
         FragmentManager fm = getSupportFragmentManager();
@@ -164,30 +166,30 @@ public class MainActivity extends BaseActivity  implements InetEventHandler,Upda
     }
 
 
-
     @Override
     public void onWifiNet() {
         if (NetUtil.getNetworkState(this) == NetUtil.NETWORN_NONE) {
-             ToastUtils.showShort(this,"网络中断");
+            ToastUtils.showShort(this, "网络中断");
           /* Intent in=new Intent(this,EmptyClass.class);
             in.putExtra("error",1);
             startActivity(in);
             EmptyLayout emptyLayout = new EmptyLayout(me);
             emptyLayout.showError(R.mipmap.add_06,"网络中断");
             setContentView(emptyLayout);*/
-        }else {
-            ToastUtils.showShort(this,"网络已连接");
+        } else {
+            ToastUtils.showShort(this, "网络已连接");
         }
     }
 
     @Override
     public void onVersion(Version version) {
         int versionCode = VersionUtils.getVersionCode(me);
-        if(versionCode < version.versionCode){
+        if (versionCode < version.versionCode) {
             Intent intent = new Intent();
-            intent.putExtra("version",version);
-            intent.setClass(this,VersionActivity.class);
+            intent.putExtra("version", version);
+            intent.setClass(this, VersionActivity.class);
             startActivity(intent);
         }
     }
+
 }

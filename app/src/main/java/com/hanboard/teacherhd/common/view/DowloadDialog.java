@@ -14,6 +14,8 @@ import com.hanboard.teacherhd.R;
 import com.hanboard.teacherhd.lib.ui.numberprogressbar.NumberProgressBar;
 import com.hanboard.teacherhd.lib.ui.numberprogressbar.OnProgressBarListener;
 
+import org.w3c.dom.Text;
+
 /**
  * Created by Administrator on 2016/8/8.
  */
@@ -22,6 +24,8 @@ public class DowloadDialog implements OnProgressBarListener {
     private String content;
     private Dialog dialog;
     private NumberProgressBar mProgressBar;
+    private TextView totalLength,downloadLength,netSpeed;
+
     public DowloadDialog(Context context, String content){
         this.context = context;
         this.content = content;
@@ -35,12 +39,29 @@ public class DowloadDialog implements OnProgressBarListener {
         mProgressBar= (NumberProgressBar) view.findViewById(R.id.progress);
         dialog = new AlertDialog.Builder(context, R.style.Dialog).create();
         dialog.setCancelable(false);
+        totalLength = (TextView)view.findViewById(R.id.totalLength);
+        downloadLength = (TextView)view.findViewById(R.id.downloadLength);
+        netSpeed = (TextView)view.findViewById(R.id.netSpeed);
+
         Window dialogWindow = dialog.getWindow();
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
         dialogWindow.setGravity( Gravity.CENTER);
         dialog.show();
         dialog.getWindow().setContentView(view);
     }
+
+    public void setDownloadLength(String d){
+        downloadLength.setText(d);
+    }
+
+    public void setTotalLength(String t){
+        totalLength.setText(t);
+    }
+
+    public void setnNtSpeed(String n){
+        netSpeed.setText(n);
+    }
+
     public void setPercent(int progress){
         mProgressBar.setProgress(progress);
     }

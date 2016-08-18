@@ -39,7 +39,7 @@ public class DialogRecyleAdapter extends RecyclerView.Adapter<DialogRecyleAdapte
     @Override
     public void onBindViewHolder(final MyViewhoder holder, final int position) {
             holder.textView.setText(prepareSelectCourses.get(position).getSubjectName());
-            holder.sectionName.setText(prepareSelectCourses.get(position).getSectionName());
+            holder.sectionName.setText(prepareSelectCourses.get(position).getSuitObjectName());
             holder.linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

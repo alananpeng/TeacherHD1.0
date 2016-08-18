@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -117,8 +118,13 @@ public class CourseWareFragment extends BaseFragment {
                                     @Override
                                     public void downloadProgress(long currentSize, long totalSize, float progress, long networkSpeed) {
                                         //这里回调下载进度(该回调在主线程,可以直接更新ui)
-                                        dowload.setPercent(Math.round(progress));
-
+                                        String downloadLength = Formatter.formatFileSize(context, currentSize);
+                                        String totalLength = Formatter.formatFileSize(context, totalSize);
+                                        String netSpeed = Formatter.formatFileSize(context, networkSpeed);
+                                        dowload.setPercent(Math.round(Math.round(progress * 10000) * 1.0f / 100));
+                                        dowload.setDownloadLength(downloadLength+"/");
+                                        dowload.setTotalLength(totalLength);
+                                        dowload.setnNtSpeed(netSpeed+"/s");
                                     }
 
                                     @Override

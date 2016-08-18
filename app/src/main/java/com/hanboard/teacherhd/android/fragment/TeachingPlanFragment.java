@@ -52,7 +52,6 @@ public class TeachingPlanFragment extends BaseFragment implements OnTabSelectLis
             for (String title : mTitles) {
                 mFragments.add(SimpleCardFragment.getInstance(title, mPlans));
             }
-            View decorView = getActivity().getWindow().getDecorView();
             ViewPager vp = (ViewPager) getRootView().findViewById(R.id.vp);
             mAdapter = new MyPagerAdapter(getActivity().getSupportFragmentManager());
             vp.setAdapter(mAdapter);
@@ -73,14 +72,6 @@ public class TeachingPlanFragment extends BaseFragment implements OnTabSelectLis
     @Override
     public void onTabReselect(int position) {
 
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {

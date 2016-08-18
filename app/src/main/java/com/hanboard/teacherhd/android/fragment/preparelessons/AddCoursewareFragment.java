@@ -57,7 +57,6 @@ public class AddCoursewareFragment extends BaseFragment implements AdapterView.O
         addLessonsCoursewareGridview.setAdapter(mAdapter);
         addLessonsCoursewareGridview.setOnItemClickListener(this);
         addLessonsCoursewareGridview.setOnItemLongClickListener(this);
-
     }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

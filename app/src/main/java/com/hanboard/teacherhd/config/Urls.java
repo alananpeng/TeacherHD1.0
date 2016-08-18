@@ -1,5 +1,8 @@
 package com.hanboard.teacherhd.config;
 
+import com.hanboard.teacherhd.android.entity.Domine;
+import com.hanboard.teacherhd.common.callback.IDataCallback;
+
 /**
  * 项目名称：TeacherHD
  * 类描述：
@@ -13,7 +16,7 @@ public class Urls {
     /*port*/
     public static final String SERVER_PORT = "2009/hanboardApp/";
     /**SERVER_ADDRESS*/
-    public static final String SERVER_ADDRESS = SERVER_HOST+":"+SERVER_PORT+"/";
+    public static final String SERVER_ADDRESS = SERVER_HOST+":"+SERVER_PORT;
     /** 登录接口 */
     public static final String URL_LOGIN = SERVER_ADDRESS+"api/v1/user/login";
     /**获取所有科目*/
@@ -54,4 +57,21 @@ public class Urls {
     public static  final  String URL_GETPRECOURSEWARE=SERVER_ADDRESS+"api/v1/content/findInfoByContentId";
     /**获取app——banner*/
     public static final String URL_GETBANNER = SERVER_ADDRESS+"api/v1/banner/andriodPadQueryBanner";
+    /*删除备课信息*/
+    public static final String URL_DELETELESSONS = SERVER_ADDRESS+"api/v1/content/deleteContent";
+    /**获取用户信息*/
+    public static final String URL_GETUSERINFO = SERVER_ADDRESS+"api/v1/user/getUserInfoById";
+    /*验证原密码*/
+    public static final String URL_CHECK_OLD_PWD = SERVER_ADDRESS+"api/v1/user/checkOldPwd";
+    /*修改密码*/
+    public static final String URL_UPDATE_PWD = SERVER_ADDRESS+"api/v1/user/updatePwd";
+    /*修改电话*/
+    public static final String URL_UPDATE_TEL = SERVER_ADDRESS+"api/v1/user/updateAccountInfo";
+    /*修改邮箱*/
+    public static final String URL_UPDATE_EMAIL = SERVER_ADDRESS+"api/v1/user/updateAccountInfo";
+    /**修改姓名*/
+    public static final String URL_UPDATE_NAME = SERVER_ADDRESS+"api/v1/user/updateAccountInfo";
+    /*修改昵称*/
+    public static final String URL_UPDATE_NICKNAME = SERVER_ADDRESS+"api/v1/user/updateAccountInfo";
+
 }

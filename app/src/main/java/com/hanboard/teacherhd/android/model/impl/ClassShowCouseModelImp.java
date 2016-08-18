@@ -43,7 +43,6 @@ public class ClassShowCouseModelImp implements IClassShowCouseModel{
                     iDataCallback.onError(e.getMessage(),600);
                     Log.e(TAG, "onError: "+e.getMessage() );
                 }
-
                 @Override
                 public void onResponse(String response, int id) {
                     if (null!=response||!response.equals("")){

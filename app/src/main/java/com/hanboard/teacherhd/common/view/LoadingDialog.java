@@ -32,7 +32,7 @@ public class LoadingDialog {
         dialog.setCancelable(false);
         Window dialogWindow = dialog.getWindow();
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-        dialogWindow.setGravity( Gravity.TOP);
+        dialogWindow.setGravity( Gravity.CENTER);
         dialog.show();
         dialog.getWindow().setContentView(view);
     }

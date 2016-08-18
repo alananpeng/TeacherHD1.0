@@ -29,8 +29,6 @@ public class PrepareSelectCourse extends Domine {
      * versionName : 人教版
      * publishDate : 2016-08-04
      */
-
-
     private String teachBookId;
     private String accountId;
     private String subjectName;

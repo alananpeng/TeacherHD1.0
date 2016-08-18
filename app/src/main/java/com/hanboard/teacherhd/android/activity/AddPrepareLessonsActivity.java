@@ -11,7 +11,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
@@ -55,17 +57,14 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class AddPrepareLessonsActivity extends FragmentActivity {
-
     @BindView(R.id.add_lessons_teachingplan)
     TextView addLessonsTeachingplan;
     @BindView(R.id.add_lessons_courseware)
     TextView addLessonsCourseware;
     @BindView(R.id.add_lessons_exercises)
     TextView addLessonsExercises;
-
     private int textSizeOn = 24;
     private int textSize = 18;
-
     private AddCoursewareFragment mAddCoursewareFragment;
     private AddExercisesFragment mAddExercisesFragment;
     private AddTeachingPlanFragment mAddTeachingPlanFragment;
@@ -79,7 +78,6 @@ public class AddPrepareLessonsActivity extends FragmentActivity {
         initDisplay();
         initTab();
     }
-
     /*设置默认Fragment*/
     private void initTab() {
         if (mAddTeachingPlanFragment == null) {
@@ -89,16 +87,13 @@ public class AddPrepareLessonsActivity extends FragmentActivity {
             getSupportFragmentManager().beginTransaction().add(R.id.add_lessons_content,mAddTeachingPlanFragment).commit();
             currentFragment = mAddTeachingPlanFragment;
             reset();
-            addLessonsTeachingplan.setTextColor(Color.parseColor("#00bfff"));
-            addLessonsTeachingplan.setTextSize(textSizeOn);
+            addLessonsTeachingplan.setBackgroundResource(R.drawable.select_bg);
         }
     }
-
     @OnClick({R.id.add_lessons_teachingplan, R.id.add_lessons_courseware, R.id.add_lessons_exercises,R.id.add_lessons_allsave})
     void onClick(View v){
         reset();
         switch (v.getId()){
-
             case R.id.add_lessons_teachingplan:
                 clickTeachingPlan();
                 break;
@@ -115,52 +110,42 @@ public class AddPrepareLessonsActivity extends FragmentActivity {
                 break;
         }
     }
-
-
     private void clickTeachingPlan() {
-        // TODO Auto-generated method stub
         if (mAddTeachingPlanFragment == null) {
             mAddTeachingPlanFragment = new AddTeachingPlanFragment();
         }
         addOrShowFragment(getSupportFragmentManager().beginTransaction(), mAddTeachingPlanFragment);
         //变化指示器
-        addLessonsTeachingplan.setTextColor(Color.parseColor("#00bfff"));
-        addLessonsTeachingplan.setTextSize(textSizeOn);
+        addLessonsTeachingplan.setBackgroundResource(R.drawable.select_bg);
     }
-
     private void clickExercises() {
-        // TODO Auto-generated method stub
         if (mAddExercisesFragment == null) {
             mAddExercisesFragment = new AddExercisesFragment();
         }
         addOrShowFragment(getSupportFragmentManager().beginTransaction(), mAddExercisesFragment);
         //变化指示器
-        addLessonsExercises.setTextColor(Color.parseColor("#00bfff"));
-        addLessonsExercises.setTextSize(textSizeOn);
+        addLessonsExercises.setBackgroundResource(R.drawable.select_bg);
     }
-
     private void clickCourseware() {
-        // TODO Auto-generated method stub
         if (mAddCoursewareFragment == null) {
             mAddCoursewareFragment = new AddCoursewareFragment();
         }
         addOrShowFragment(getSupportFragmentManager().beginTransaction(), mAddCoursewareFragment);
         //变化指示器
-        addLessonsCourseware.setTextColor(Color.parseColor("#00bfff"));
-        addLessonsCourseware.setTextSize(textSizeOn);
+        addLessonsCourseware.setBackgroundResource(R.drawable.select_bg);
+
     }
-
-
     private void reset() {
-        addLessonsTeachingplan.setTextColor(Color.parseColor("#ffffff"));
-        addLessonsTeachingplan.setTextSize(textSize);
-        addLessonsCourseware.setTextColor(Color.parseColor("#ffffff"));
-        addLessonsCourseware.setTextSize(textSize);
-        addLessonsExercises.setTextColor(Color.parseColor("#ffffff"));
-        addLessonsExercises.setTextSize(textSize);
+        addLessonsTeachingplan.setBackgroundResource(R.mipmap.add_lessons_center_07);
+        addLessonsCourseware.setBackgroundResource(R.mipmap.add_lessons_center_07);
+        addLessonsExercises.setBackgroundResource(R.mipmap.add_lessons_center_07);
     }
     /*初始化屏幕*/
     private void initDisplay() {
+        Window dialogWindow = getWindow();
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        dialogWindow.setGravity(Gravity.RIGHT);
+        lp.x = 100; // 新位置X坐标
         WindowManager m = getWindowManager();
         Display d = m.getDefaultDisplay();
         WindowManager.LayoutParams p = getWindow().getAttributes();
@@ -228,7 +213,6 @@ public class AddPrepareLessonsActivity extends FragmentActivity {
             params.put("teachBookId",new DESCoder(CoderConfig.CODER_CODE).encrypt(textbookId));
             params.put("contentTitle",new DESCoder(CoderConfig.CODER_CODE).encrypt(title));
             params.put("courseHour",keshi);
-//
             OkHttpUtils.post(Urls.URL_ADDLESSONSINFO)
                     .tag(this)
                     .params(params)
@@ -284,11 +268,13 @@ public class AddPrepareLessonsActivity extends FragmentActivity {
         @Override
         public void upProgress(long currentSize, long totalSize, float progress, long networkSpeed) {
             super.upProgress(currentSize, totalSize, progress, networkSpeed);
-//          String downloadLength = Formatter.formatFileSize(AddPrepareLessonsActivity.this, currentSize);
-//          String totalLength = Formatter.formatFileSize(AddPrepareLessonsActivity.this, totalSize);
-//          String netSpeed = Formatter.formatFileSize(AddPrepareLessonsActivity.this, networkSpeed);
-//          ToastUtils.showShort(AddPrepareLessonsActivity.this,"currentSize"+currentSize+"totalSize"+totalSize+"networkSpeed"+networkSpeed);
+            String downloadLength = Formatter.formatFileSize(AddPrepareLessonsActivity.this, currentSize);
+            String totalLength = Formatter.formatFileSize(AddPrepareLessonsActivity.this, totalSize);
+            String netSpeed = Formatter.formatFileSize(AddPrepareLessonsActivity.this, networkSpeed);
             mProgress.setPercent(Math.round(Math.round(progress * 10000) * 1.0f / 100));
+            mProgress.setDownloadLength(downloadLength+"/");
+            mProgress.setTotalLength(totalLength);
+            mProgress.setnNtSpeed(netSpeed+"/s");
         }
     }
 }

@@ -2,9 +2,11 @@ package com.hanboard.teacherhd.common.view;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -28,7 +30,6 @@ public class CustomDialog extends Dialog{
     public CustomDialog(Context context, int theme) {
         super(context, theme);
     }
-
 
     public static class Builder  implements View.OnClickListener{
         private LeaveDialogListener leaveDialogListener;

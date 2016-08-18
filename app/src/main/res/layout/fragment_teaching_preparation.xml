@@ -27,8 +27,8 @@
             android:layout_centerHorizontal="true" />
         <ImageView
             android:layout_marginRight="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
             android:id="@+id/imageView6"
             android:src="@mipmap/search"
             android:layout_centerVertical="true"
@@ -44,7 +44,6 @@
             android:layout_weight="2"
             android:layout_width="0dp"
             android:layout_height="match_parent">
-
             <LinearLayout
                 android:elevation="6dp"
                 android:layout_width="match_parent"
@@ -70,7 +69,6 @@
                     android:textColor="@color/white"
                     android:textSize="18dp"/>
             </LinearLayout>
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -100,7 +98,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent">
             <fragment
-                 android:id="@+id/NewLessonsDetailFragment"
                  android:name="com.hanboard.teacherhd.android.fragment.NewLessonsDetailFragment"
                  android:layout_width="match_parent"
                  android:layout_height="match_parent" />

@@ -20,8 +20,17 @@ public class PrepareContent extends Domine{
     private String contentTitle;
     private String contentObject;
     private long createTime;
-    private String updateTime;
+    private long updateTime;
     private int courseHour;
+
+    public long getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(long updateTime) {
+        this.updateTime = updateTime;
+    }
+
     private String accountId;
     private String lessonPlan;
     private String exercises;
@@ -49,14 +58,6 @@ public class PrepareContent extends Domine{
 
     public void setCreateTime(long createTime) {
         this.createTime = createTime;
-    }
-
-    public String getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
     }
 
     public int getCourseHour() {

@@ -18,6 +18,7 @@ import com.hanboard.teacherhd.android.entity.Account;
 import com.hanboard.teacherhd.android.entity.Content;
 import com.hanboard.teacherhd.android.entity.Domine;
 import com.hanboard.teacherhd.android.entity.Lessons;
+import com.hanboard.teacherhd.android.entity.MData;
 import com.hanboard.teacherhd.android.entity.listentity.LessonsList;
 import com.hanboard.teacherhd.android.entity.params.GetLessons;
 import com.hanboard.teacherhd.android.model.ISelectTextBookModel;
@@ -25,6 +26,7 @@ import com.hanboard.teacherhd.android.model.impl.SelectTextBookModelImpl;
 import com.hanboard.teacherhd.common.base.BaseFragment;
 import com.hanboard.teacherhd.common.callback.IDataCallback;
 import com.hanboard.teacherhd.common.view.LoadingDialog;
+import com.hanboard.teacherhd.common.view.OperationDialog;
 import com.hanboard.teacherhd.lib.common.utils.SharedPreferencesUtils;
 import com.hanboard.teacherhd.lib.common.utils.ToastUtils;
 
@@ -45,7 +47,7 @@ import butterknife.ButterKnife;
  * 作者单位：四川汉博德信息技术有限公司
  * 创建时间：2016/8/9 0009 10:41
  */
-class NewLessonsDetailFragment extends BaseFragment implements IDataCallback<Domine>{
+public class NewLessonsDetailFragment extends BaseFragment implements IDataCallback<Domine>{
     @BindView(R.id.gd_new_lessons_list)
     GridView mGdNewLessonsList;
     private ISelectTextBookModel iSelectTextBookModel;
@@ -55,6 +57,8 @@ class NewLessonsDetailFragment extends BaseFragment implements IDataCallback<Dom
     private String textbookId;
     private String chapterId;
     private String accountId;
+    private OperationDialog o;
+    private NewLessonsGridViewAdapter mAdapter;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
@@ -72,6 +76,34 @@ class NewLessonsDetailFragment extends BaseFragment implements IDataCallback<Dom
                 if(ls.content.contentTitle.equals("添加课程")){
                     startActivityForResult(new Intent(context, AddPrepareLessonsActivity.class),300);
                 }
+            }
+        });
+        mGdNewLessonsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final Lessons l = (Lessons)parent.getAdapter().getItem(position);
+                o = new OperationDialog.Builder(context, new OperationDialog.Builder.LeaveDialogListener() {
+                    @Override
+                    public void delete(View v) {
+                        iSelectTextBookModel.deleteLessons(l.contentId, new IDataCallback<MData<String>>() {
+                            @Override
+                            public void onSuccess(MData<String> data) {
+                                ToastUtils.showShort(context,"删除成功");
+                                o.dismiss();
+                            }
+                            @Override
+                            public void onError(String msg, int code) {
+                                ToastUtils.showShort(context,msg+code);
+                            }
+                        });
+                    }
+                    @Override
+                    public void edit(View v) {
+
+                    }
+                }).create();
+                o.show();
+                return false;
             }
         });
     }
@@ -102,7 +134,8 @@ class NewLessonsDetailFragment extends BaseFragment implements IDataCallback<Dom
             c.contentTitle="添加课程";
             l.content = c;
             res.add(0,l);
-            mGdNewLessonsList.setAdapter(new NewLessonsGridViewAdapter(context,R.layout.new_lessons_item,res,mSubjectName));
+            mAdapter = new NewLessonsGridViewAdapter(context,R.layout.new_lessons_item,res,mSubjectName);
+            mGdNewLessonsList.setAdapter(mAdapter);
         }
     }
     @Override
@@ -125,8 +158,7 @@ class NewLessonsDetailFragment extends BaseFragment implements IDataCallback<Dom
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 300) {
-//            iSelectTextBookModel.getPrepareLessons(chapterId,accountId,textbookId,String.valueOf(1),this);
-            ToastUtils.showShort(context,"上传成功回来的");
+            iSelectTextBookModel.getPrepareLessons(chapterId,accountId,textbookId,String.valueOf(1),this);
         }
     }
 }

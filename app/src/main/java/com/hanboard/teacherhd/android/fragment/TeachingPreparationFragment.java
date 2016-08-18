@@ -1,13 +1,8 @@
 package com.hanboard.teacherhd.android.fragment;
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.hanboard.teacherhd.R;
@@ -15,7 +10,6 @@ import com.hanboard.teacherhd.android.activity.SelectTextBookActivity;
 import com.hanboard.teacherhd.android.adapter.TextBookAllChapterAdapter;
 import com.hanboard.teacherhd.android.adapter.TreeListViewAdapter;
 import com.hanboard.teacherhd.android.entity.Chapter;
-import com.hanboard.teacherhd.android.entity.Domine;
 import com.hanboard.teacherhd.android.entity.Elements;
 import com.hanboard.teacherhd.android.entity.params.GetLessons;
 import com.hanboard.teacherhd.android.entity.tree.Node;
@@ -32,13 +26,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 /**
  * 项目名称：TeacherHD
- * 类描述：
  * 创建人：peng.an@hanboard.com
  * 作者单位：四川汉博德信息技术有限公司
  * 创建时间：2016/8/3 0003 11:32
@@ -53,14 +45,13 @@ public class TeachingPreparationFragment extends BaseFragment implements IDataCa
     private LoadingDialog loading;
     private Timer timer;
     private  int recLen=Integer.MAX_VALUE;
-
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
-        iSelectTextBookModel = new SelectTextBookModelImpl();
         return inflater.inflate(R.layout.fragment_teaching_preparation, container, false);
     }
     @Override
     protected void initData(){
+        iSelectTextBookModel = new SelectTextBookModelImpl();
         loading = new LoadingDialog(context,"玩命加载中...");
         String pageNum = "1";
         String accountId = (String) SharedPreferencesUtils.getParam(context,"id","");
@@ -114,8 +105,5 @@ public class TeachingPreparationFragment extends BaseFragment implements IDataCa
             EventBus.getDefault().post(getLessons);
         }
     }
-
-
-
 }
 

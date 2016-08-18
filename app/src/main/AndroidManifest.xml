@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hanboard.teacherhd"
-    android:revisionCode="2"
-    android:versionName="0.0.2">
+    android:versionCode="1"
+    android:versionName="0.0.1">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
@@ -24,11 +24,11 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".android.activity.LoginActivity"
-            android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+            android:screenOrientation="sensorLandscape"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".android.activity.MainActivity"
-            android:screenOrientation="landscape"
+            android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".android.activity.ClassActivity"
@@ -36,16 +36,16 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".android.activity.JiecaoPlayer"
-            android:screenOrientation="landscape"
+            android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".android.activity.SelectTextBookActivity"
-            android:screenOrientation="landscape"
+            android:screenOrientation="sensorLandscape"
             android:theme="@style/dialogActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".android.activity.DialogActivity"
-            android:screenOrientation="landscape"
+            android:screenOrientation="sensorLandscape"
             android:theme="@style/dialogActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
@@ -60,13 +60,13 @@
 
         <activity
             android:name=".android.activity.AddPrepareLessonsActivity"
-            android:screenOrientation="landscape"
+            android:screenOrientation="sensorLandscape"
             android:theme="@style/dialogActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name="com.nononsenseapps.filepicker.FilePickerActivity"
             android:label="@string/app_name"
-            android:screenOrientation="landscape"
+            android:screenOrientation="sensorLandscape"
             android:theme="@style/FilePickerTheme"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
             <intent-filter>
@@ -81,15 +81,16 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+
         <activity
             android:name=".android.activity.EmptyClass"
             android:label="@string/title_activity_empty_class"
-            android:screenOrientation="landscape"
+            android:screenOrientation="sensorLandscape"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".android.activity.BlockBoardActivity"
-            android:screenOrientation="landscape"
+            android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
         <service android:name=".android.service.RecordService" />
@@ -108,7 +109,7 @@
 
         <activity
             android:name=".android.activity.SplashActivity"
-            android:screenOrientation="landscape"
+            android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -118,9 +119,10 @@
         </activity>
         <activity
             android:name=".android.activity.VersionActivity"
-            android:screenOrientation="landscape"
+            android:screenOrientation="sensorLandscape"
             android:theme="@style/dialogActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" ></activity>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name=".android.activity.MineActivity"></activity>
     </application>
 
 </manifest>

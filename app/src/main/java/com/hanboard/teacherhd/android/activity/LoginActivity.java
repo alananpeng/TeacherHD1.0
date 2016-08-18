@@ -78,12 +78,9 @@ public class LoginActivity extends BaseActivity implements IDataCallback<Domine>
     private void doLogin() {
         showProgress("正在登录");
         Account account = new Account();
-        account.accountName = accountName;
-        account.password  = password;
-        if (accountName.equals("null")||password.equals("null")){
-            account.accountName = mEdtLogingUsername.getText().toString().trim();
-            account.password  = mEdtLogingPwd.getText().toString().trim();
-        }
+        account.accountName = mEdtLogingUsername.getText().toString().trim();
+        account.password  = mEdtLogingPwd.getText().toString().trim();
+
         loginModel.doLogin(account,this,this);
     }
 

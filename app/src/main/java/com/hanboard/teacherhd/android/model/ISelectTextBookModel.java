@@ -3,6 +3,7 @@ package com.hanboard.teacherhd.android.model;
 import com.hanboard.teacherhd.android.entity.Chapter;
 import com.hanboard.teacherhd.android.entity.Domine;
 import com.hanboard.teacherhd.android.entity.Elements;
+import com.hanboard.teacherhd.android.entity.MData;
 import com.hanboard.teacherhd.android.entity.Subject;
 import com.hanboard.teacherhd.android.entity.TextBook;
 import com.hanboard.teacherhd.common.callback.IDataCallback;
@@ -30,4 +31,6 @@ public interface ISelectTextBookModel {
     void getTextbookChapter(String pageNum,String accountId,IDataCallback<Elements<Chapter>> iDataCallback);
     /*通过章节id 账号id 课本id获取该章节下所有备课信息*/
     void getPrepareLessons(String chapterId,String accountId,String textBookId,String pageNum,IDataCallback<Domine> iDataCallback);
+    /*删除备课*/
+    void deleteLessons(String contentId,IDataCallback<MData<String>> iDataCallback);
 }

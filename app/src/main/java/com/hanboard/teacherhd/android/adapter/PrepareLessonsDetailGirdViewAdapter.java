@@ -1,7 +1,6 @@
 package com.hanboard.teacherhd.android.adapter;
 
 import android.content.Context;
-
 import com.hanboard.teacherhd.R;
 import com.hanboard.teacherhd.android.entity.Content;
 import com.hanboard.teacherhd.android.entity.Elements;
@@ -10,7 +9,6 @@ import com.hanboard.teacherhd.android.entity.PrepareChapter;
 import com.hanboard.teacherhd.lib.common.adapter.CommonAdapter;
 import com.hanboard.teacherhd.lib.common.adapter.CommonViewHolder;
 import com.hanboard.teacherhd.lib.common.utils.TimeUtils;
-
 import java.util.List;
 /**
  * 项目名称：TeacherHD
@@ -20,8 +18,6 @@ import java.util.List;
  * 创建时间：2016/7/25 0025 11:30
  */
 public class PrepareLessonsDetailGirdViewAdapter extends CommonAdapter<PrepareChapter> {
-
-
     /**
      * @param context         Context
      * @param itemLayoutResId
@@ -33,13 +29,11 @@ public class PrepareLessonsDetailGirdViewAdapter extends CommonAdapter<PrepareCh
 
     @Override
     protected void fillItemData(CommonViewHolder viewHolder, int position, PrepareChapter item) {
-
             viewHolder.setTextForTextView(R.id.new_lessons_subject,item.content.getContentObject());
             viewHolder.setTextForTextView(R.id.new_lessons_title,item.getTitle());
             viewHolder.setTextForTextView(R.id.new_lessons_suitobject,item.content.getContentObject());
             viewHolder.setTextForTextView(R.id.new_lessons_courseHour,item.content.getCourseHour()+"");
-            viewHolder.setTextForTextView(R.id.new_lessons_createtime, TimeUtils.getTime(item.getCreateTime(),TimeUtils.DATE_FORMAT_DATE)+"         最后修改:"+item.content.getUpdateTime());
+            viewHolder.setTextForTextView(R.id.new_lessons_createtime, TimeUtils.getTime(item.getCreateTime(),TimeUtils.DATE_FORMAT_DATE)+"         最后修改:"+TimeUtils.getTime(item.content.getUpdateTime(),TimeUtils.DATE_FORMAT_DATE));
             viewHolder.setTextForTextView(R.id.new_lessons_title,item.getTitle());
-
     }
 }

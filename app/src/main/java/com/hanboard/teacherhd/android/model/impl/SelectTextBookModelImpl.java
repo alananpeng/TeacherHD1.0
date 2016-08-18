@@ -23,6 +23,7 @@ import com.hanboard.teacherhd.config.Constants;
 import com.hanboard.teacherhd.config.Urls;
 import com.hanboard.teacherhd.lib.common.http.okhttp.OkHttpUtils;
 import com.hanboard.teacherhd.lib.common.http.okhttp.callback.GenericsCallback;
+import com.hanboard.teacherhd.lib.common.http.okhttp.callback.StringCallback;
 import com.hanboard.teacherhd.lib.common.utils.DESCoder;
 import com.hanboard.teacherhd.lib.common.utils.JsonUtil;
 
@@ -231,6 +232,35 @@ public class SelectTextBookModelImpl implements ISelectTextBookModel {
                             iDataCallback.onSuccess(res.result);
                         else
                             iDataCallback.onError(CodeInfo.REQUEST_FAILDE,Integer.valueOf(res.code));
+                    }else {
+                        iDataCallback.onError(CodeInfo.REQUEST_EMPTY,0);
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deleteLessons(String contentId, final IDataCallback<MData<String>> iDataCallback) {
+        try {
+            Map<String,String> param = new BaseMap().initMap();
+            param.put("contentIds",contentId);
+            OkHttpUtils.get().params(param).url(Urls.URL_DELETELESSONS).build().execute(new StringCallback() {
+                @Override
+                public void onError(Call call, Exception e, int id) {
+                    iDataCallback.onError(e.getMessage(),id);
+                }
+                @Override
+                public void onResponse(String response, int id) {
+                    if(null!=response||!response.equals("")){
+                        MData<String> res = JsonUtil.fromJson(response,new TypeToken<MData<String>>(){}.getType());
+                        if(res.code.equals(Constants.CODE_SUCCESS)){
+                            iDataCallback.onSuccess(res);
+                        }else{
+                            iDataCallback.onError("删除失败",Integer.valueOf(res.code));
+                        }
                     }else {
                         iDataCallback.onError(CodeInfo.REQUEST_EMPTY,0);
                     }

@@ -12,7 +12,7 @@
         android:layout_weight="1">
     </RelativeLayout>
     <LinearLayout
-        android:padding="10dp"
+        android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="#ffffff"
@@ -53,9 +53,9 @@
             android:gravity="center"
             android:textColor="@color/white"
             android:text="下一步,上传"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@mipmap/add_lessons_right_08"/>
+            android:background="@mipmap/add_lessons_center_07"/>
     </LinearLayout>
 </LinearLayout>
